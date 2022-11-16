@@ -27,6 +27,7 @@ app.use(credentials);
 app.use(cors(corsOptions));
 
 // built-in middleware to handle urlencoded form data
+app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 
 // built-in middleware for json 
@@ -45,6 +46,8 @@ app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 app.use('/forgot-password', require('./routes/forgotpassword'));
+app.use('/reset-password',require('./routes/resetpasswordget'));
+app.use('/reset-password',require('./routes/resetpasswordpost'));
 
 app.use(verifyJWT);
 
