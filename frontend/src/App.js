@@ -6,7 +6,7 @@ import Missing from './components/Missing';
 import PersistLogin from './components/PersistLogin';
 import Register from './components/Register';
 import RequireAuth from './components/RequireAuth';
-
+import Forgotpassword  from './components/Forgotpassword';
 import Unauthorized from './components/Unauthorized';
 const ROLES = {
   'User': 2001,
@@ -23,6 +23,7 @@ function App() {
         {/* public routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="forgotpassword" element={<Forgotpassword />} />
         <Route path="/" element={<Layout />}>
           <Route path="unauthorized" element={<Unauthorized />} />
 

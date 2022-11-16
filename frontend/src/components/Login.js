@@ -111,9 +111,14 @@ const Login = () => {
                 </div>
             </form>
             <p style={{color:'white'}}>
+                <span className="line">
+                    <Link to="/forgotpassword">Forgot Password</Link>
+                </span>
+            </p>
+            <p style={{color:'white'}}>
                 Need an Account?<br />
                 <span className="line">
-                    <Link to="/register">Sign Up</Link>
+                    <Link to="/register">Sign Up For Free</Link>
                 </span>
             </p>
         </section>
