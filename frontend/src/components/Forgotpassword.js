@@ -61,6 +61,7 @@ const Forgotpassword = () => {
             // TODO: remove console.logs before deployment
             console.log(JSON.stringify(response?.data));
             //console.log(JSON.stringify(response))
+            alert('Email Sent !! Check your Inbox');
 
 
             //clear state and controlled inputs
@@ -72,12 +73,14 @@ const Forgotpassword = () => {
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
+                setErrMsg('Email Not sent');
             } else if (err.response?.status === 410) {
                 setErrMsg('Email Taken')
+            }else if(err.response?.status === 401){
+                setErrMsg("Email Doesn't exist")
             }
             else {
-                setErrMsg('Registration Failed')
+                setErrMsg(' Email not Sent')
             }
             errRef.current.focus();
         }

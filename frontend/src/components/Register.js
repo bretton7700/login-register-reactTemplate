@@ -194,6 +194,8 @@ const Register = () => {
                                 <span aria-label="at symbol">@</span> Sign
                             </p>
                         </Col>
+                        </Row>
+                        <Row>
                         <Col sm={6}>
 
                             <label htmlFor="password">
@@ -281,8 +283,8 @@ const Register = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={3}>
-                            <button disabled={!validName || !validPwd || !validMatch ? true : false} style={{ marginTop: '1rem' }}>Sign Up For Free</button>
+                        <Col sm={5}>
+                            <button disabled={ !phonenumber || !companyname || !validName || !validPwd || !validMatch ? true : false} style={{ marginTop: '1rem' }}>Sign Up For Free</button>
                         </Col>
                     </Row>
                 </form>

@@ -74,7 +74,7 @@ const Login = () => {
     }, [persist])
 
     return (
-
+<div class="card">
         <section>
            {/* <img src={Ndovucloud}  className='center'/> */}
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -116,12 +116,14 @@ const Login = () => {
                 </span>
             </p>
             <p style={{color:'white'}}>
-                Need an Account?<br />
+                {/* Need an Account?<br /> */}
                 <span className="line">
                     <Link to="/register">Sign Up For Free</Link>
                 </span>
             </p>
         </section>
+        </div>
+        
 
     )
 }

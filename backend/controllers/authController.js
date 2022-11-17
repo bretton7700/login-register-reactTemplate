@@ -62,6 +62,7 @@ const handleReset = async (req, res) => {
                 expiresIn: "5m",
             }
     );
+
     const link =`http://159.223.233.184:8000/reset-password/${foundUser._id}/${token}`;
     if(foundUser) {
         const msg = {
@@ -98,11 +99,11 @@ const passwordChangeget  = async(req,res) => {
 
     try{
         const verify = jwt.verify(token, secret);
-        res.render("index", {email: verify.email, status: "Not Verified"});
+        res.render("index", { email: verify.email, status: "Not Verified" });
 
     }catch(error){
         console.log(error);
-        res.send("Not Verified")
+        res.send("Your Token is Expired")
     }
 }
 
@@ -128,7 +129,8 @@ const passwordchangepost  = async(req,res) =>{
                 }
             }
         );
-        res.render("index", {email: verify.email, status: "verified"});
+        res.render("index", { email: verify.email, status: "verified" });
+        
     }catch (error){
         console.log(error);
         res.json({status: "Something went wrong"})

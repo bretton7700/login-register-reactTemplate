@@ -8,6 +8,7 @@ import Register from './components/Register';
 import RequireAuth from './components/RequireAuth';
 import Forgotpassword  from './components/Forgotpassword';
 import Unauthorized from './components/Unauthorized';
+
 const ROLES = {
   'User': 2001,
   'Editor': 1984,
@@ -24,6 +25,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forgotpassword" element={<Forgotpassword />} />
+        
         <Route path="/" element={<Layout />}>
           <Route path="unauthorized" element={<Unauthorized />} />
 

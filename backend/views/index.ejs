@@ -1,36 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script>
-      var status = '<%- JSON.stringify(status) %>';
 
-      if (JSON.parse(status) == "verified") {
-        if (confirm("Do u want to login?")) {
-          window.location.href = "http://localhost:3000/";
-        }
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ndovucloud Reset Password</title>
+  <link href="/css/reset.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script>
+    var status = '<%- JSON.stringify(status) %>';
+
+    if (JSON.parse(status) == "verified") {
+      if (confirm("Do u want to login?")) {
+        window.location.href = "http://localhost:3000/";
       }
-    </script>
-  </head>
-  <body>
-    <h1><%= email%></h1>
-    <form action="" method="post">
-      <input
-        type="password"
-        name="password"
-        id="password"
-        placeholder="password"
-      /><br />
-      <input
-        type="password"
-        name="confirm-password"
-        id="confirm-password"
-        placeholder="confirm-password"
-      /><br />
-      <input type="submit" value="submit" />
+    }
+  </script>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>
+      <%= email%>
+    </h1>
+
+    <form class="form-horizontal" action="" method="post">
+
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="password">Password: </label>
+        <div class="col-sm-5">
+          <input type="password" name="password" 
+         class="form-control" id="password" placeholder=" Enter New Password"
+            aria-describedby="passwordHelpInline"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+             title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+         
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="confirm-password">Confirm Password: </label>
+        <div class="col-sm-5">
+          <input type="password" required class="form-control" id="confirm-password" placeholder=" Confirm Password">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" value="submit" class="disabledButton" disabled  class="btn btn-primary" >Submit</button>
+          <p style="color: red;" id="error"></p>
+        </div>
+      </div>
+
+
     </form>
-  </body>
+  </div>
+  <div id="message">
+    <h3>Password must contain the following:</h3>
+    <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+    <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+    <p id="number" class="invalid">A <b>number</b></p>
+    <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+    <p id="specialChar" class="invalid">Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span></p>
+  </div>
+
+
+  <script>
+    var myInput = document.getElementById("password");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+    var specialChar = document.getElementById("specialChar");
+    
+    // When the user clicks on the password field, show the message box
+    myInput.onfocus = function() {
+      document.getElementById("message").style.display = "block";
+    }
+    
+    // When the user clicks outside of the password field, hide the message box
+    myInput.onblur = function() {
+      document.getElementById("message").style.display = "none";
+    }
+    
+    // When the user starts to type something inside the password field
+    myInput.onkeyup = function() {
+      // Validate lowercase letters
+      var lowerCaseLetters = /[a-z]/g;
+      if(myInput.value.match(lowerCaseLetters)) {
+        letter.classList.remove("invalid");
+        letter.classList.add("valid");
+      } else {
+        letter.classList.remove("valid");
+        letter.classList.add("invalid");
+    }
+    
+      // Validate capital letters
+      var upperCaseLetters = /[A-Z]/g;
+      if(myInput.value.match(upperCaseLetters)) {
+        capital.classList.remove("invalid");
+        capital.classList.add("valid");
+      } else {
+        capital.classList.remove("valid");
+        capital.classList.add("invalid");
+      }
+    
+      // Validate numbers
+      var numbers = /[0-9]/g;
+      if(myInput.value.match(numbers)) {
+        number.classList.remove("invalid");
+        number.classList.add("valid");
+      } else {
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+      }
+    
+      // Validate length
+      if(myInput.value.length >= 8) {
+        length.classList.remove("invalid");
+        length.classList.add("valid");
+      } else {
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+      }
+
+      //allowed Special Characters
+      var character_allowed = /[!@#$%]/g;
+      if(myInput.value.match(character_allowed)){
+        specialChar.classList.remove("invalid");
+        specialChar.classList.add("valid");
+      }else{
+        specialChar.classList.remove("valid");
+        specialChar.classList.add("invalid");
+      }
+    }
+
+
+
+    </script>
+
+<script>
+  $('#confirm-password').keyup(function(){
+       var password2 = $('#confirm-password').val();
+       var password1 = $('#password').val();
+       var PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+       var v2 = PWD_REGEX.test(password1);
+       
+       
+       if((password1 == password2 )&& (v2) ){
+         $('.disabledButton').prop("disabled", false);
+         $('.disabledButton').css('backgroundColor', 'green');
+         $('.disabledButton').css('color', 'white');
+         $('#error').text('');
+       } else if(!v2) {
+       $('#error').text('Your Password does not satisfy the Requirements');
+          return false;
+      }else if(password1 !== password2){
+        $('#error').text('Passwords do not match');
+          return false;
+      }else if(v2){
+        $('#error').text('');
+      }
+      
+  });
+  </script>
+
+</body>
+
 </html>
