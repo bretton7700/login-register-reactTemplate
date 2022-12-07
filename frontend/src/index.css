@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
 * {
     margin: 0;
@@ -19,7 +19,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     display: flex;
     background-color: #efefef;
-  }
+  } */
 
 
 #register_div{
@@ -31,6 +31,7 @@ body {
   justify-content: flex-start;
   padding: 1rem;
   background-color:#8E3576;
+  margin: auto;
 }
 section {
     width: 100%;
@@ -41,6 +42,7 @@ section {
     justify-content: flex-start;
     padding: 1rem;
     background-color:#8E3576;
+    margin:auto;
 }
 
 form {
@@ -153,31 +155,30 @@ li {
     margin: 0 5px 2px 2px;
 }
 
-#root {
+/* #root {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
    
-  }
+  } */
 
 
 
-  .App {
+  /* .App {
     min-height: 100vh; 
-    /* padding: 1rem 0.5rem; */
+ 
     width: 100%;
-    /* max-width: 800px; */
-    /* height: 100vh; */
+   
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid #333; */
     
-  }
+    
+  } */
   
- .Footer {
+ /* .Footer {
     width: 100%;
     background-color: #343EAB;
     padding: 1rem;
@@ -187,13 +188,13 @@ li {
     margin-top: auto;
     color:#efefef
   }
+   */
   
-  
-  .Footer {
+  /* .Footer {
     padding: 0.75rem;
-    /* display: grid; */
+
     place-content: center;
-  }
+  } */
   
   
   
@@ -210,6 +211,121 @@ li {
    
   }
   
+
+  /* -----from here its pasted */
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    font-size: 14px;
+    /* overflow: hidden; */
+    padding-bottom: 20px;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  .header {
+    text-align: center;
+  }
+  
+  .app {
+    /* height: 100vh; */
+  
+    background-color: #F0EAF0;
+  }
+  
+  .app__body {
+    display: flex;
+    /* height: 100%; */
+    
+  }
+  
+  .app__body main {
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: flex-start;
+    overflow: overlay;
+   
+  }
+  
+  .app__body > .card {
+    flex: 1;
+    margin-right: 10px;
+    background-color: transparent;
+  }
+  
+  .app__cardText {
+    color: #818181;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .bg-ndovu {
+    background-color: #8e3576 !important;
+    padding: 10px 15px;
+    position: sticky !important;
+    top: 0;
+    z-index: 999;
+  }
+  
+  .btn-primary {
+    background-color: #682f68 ;
+    border-color: #682f68 ;
+  }
+  
+  .btn-primary:hover {
+    background-color: #682f68 !important;
+    border-color: #682f68 !important;
+  }
+  
+  .text-light {
+    color: #fff;
+  }
+  
+  .form-control {
+    border: 1px solid #682f68 !important;
+    border-radius: 14px !important;
+  }
+  
+  .form-control:focus, button:focus {
+    border-color: #682f68 !important;
+    box-shadow: 0 0 0 0.25rem rgba(41, 18, 41, 0.25) !important;
+  }
+  
+  .form-control::placeholder {
+    color: #8e3576 !important;
+    font-size: 13px !important;
+    opacity: 1;
+  }
+  
+  button {
+   border-radius: 10px !important;
+  }
+  
+  .accordion-button:not(.collapsed) {
+    color: #343EAB !important;
+    background-color: #8e35761a !important;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+  }
+  
+  .accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23682f68'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+  }
+  
+  #accordionFlushExample a {
+    color: #343EAB !important;
+  }
  
 
 

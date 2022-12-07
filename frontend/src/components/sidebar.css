@@ -1,0 +1,105 @@
+.sidebar {
+    background-color: #462f68;
+    height: 100%;
+    transition: 0.5s;
+    padding-bottom: 50000px;
+  }
+  .sidebar__toggle {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sidebarToogle__icon {
+    color: #f5f5f5;
+  }
+  .sidebar__nav ul {
+    padding-left: 0 !important;
+  }
+  .sidebar__nav ul li {
+    position: relative;
+    width: 100%;
+    list-style: none;
+    transition: 0.5s;
+  }
+  .sidebar__nav ul li:hover {
+    background: #343EAB;
+    color: #f5f5f5 !important;
+  }
+  .sidebar__link {
+    position: relative;  
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+    color: #f5f5f5 !important;
+  }
+  .sidebar__link .icon,
+  .sidebar__subnav .icon {
+    position: relative;
+    display: block;
+    min-width: 60px;
+    text-align: center;
+  }
+  .sidebar__link .title,
+  .sidebar__subnav .title {
+    position: relative;
+    display: block; 
+    text-align: start;
+    white-space: nowrap;
+  }
+  .sidebar__subnav {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #f5f5f5 !important;
+    transition: 0.5s;
+  }
+  .sidebar__subnav:hover {
+    background: #343EAB;
+  
+    color: #f5f5f5 !important;
+  }
+  .active {
+    background: #343EAB;  
+  
+  }
+  .btn-primary {
+    background-color: #682f68 ;
+    border-color: #682f68 ;
+  }    
+  .btn-primary:hover {
+    background-color: #682f68 !important;
+    border-color: #682f68 !important;
+  }
+  #yenu{
+    margin-bottom: 10px;
+  }
+  #tbl{
+    background-color: #682f68 !important;
+  }
+  
+  
+  @media only screen and (max-width:600px){
+    .sidebar {width: 59px !important;}
+    .sidebar__link .title { display: none !important; }
+    .sidebar__subnav .icon { display: block !important; }
+    
+  }
+  
+  button.theButton {
+    margin-bottom: 10px !important;
+  }
+  
+  
+  @media only screen and (max-width:600px) {
+    #videos_Card{
+        display: block !important;
+        float: left !important;
+    }
+   
+  }

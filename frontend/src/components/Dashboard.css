@@ -1,0 +1,133 @@
+.Plan {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    flex-wrap: wrap;
+    
+}
+
+
+.Plan__left, .Plan__center, .Plan__right , .Plan__right2 {
+    background-color: #fff;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #eee;
+    box-shadow: 8px 8px 8px 4px rgba(0,0,0,0.75);
+    
+    border-radius: 8px; 
+    
+    padding: 20px 20px;
+    margin-right: 10px;
+    flex: 15%;
+    margin-top: 20px;
+}
+
+
+
+
+/* Responsive layout - makes a one column-layout instead of a two-column layout */
+@media (max-width: 800px) {
+    .Plan__left, .Plan__center, .Plan__right , .Plan__right2  {
+      flex: 100%;
+    }
+  }
+
+.Plan h3 {
+    color: #8e3576;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 30px;
+    padding: 20px 15px;
+    text-align: center;
+    font-family: "Titillium Web", Source Sans Pro;
+}
+
+.Plan h4 {
+    color: #fff;
+    font-family: "Titillium Web", Source Sans Pro;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 22px;
+    background-color: transparent;
+    background-image: linear-gradient(110deg,#62327e 0%,#8e3576 100%);
+    border-radius: 35px;
+    padding: 10px 20px;
+    margin: 0;
+    text-align: center;
+}
+
+.Plan__price {
+    color: #222;
+    font-size: 16px;
+    line-height: 32px;
+    padding-top: 10px;
+}
+.btn-success{
+    color: white;
+    background-color:#343EAB !important;
+    border-radius: 14px;
+    padding: 0.25rem 0.5rem;
+    
+}
+
+.Plan button{
+    color: white;
+    background-color: #343EAB !important;
+    border-radius: 14px;
+    padding: 0.25rem 0.5rem;
+  
+    
+}
+
+.Plan a{
+    color: white;
+    text-decoration: none;
+    
+}
+
+.PhoneInputInput {
+    flex: 1 1;
+    min-width: 0;
+    border-radius: 14px !important;
+    height: 2.5rem !important;
+    border: 1px solid #682f68 !important;
+}
+
+.wewe:checked 
+.content { 
+    opacity: 0;
+    height: 0;
+    display: none;
+  }
+
+
+
+button.theButton {
+    margin-bottom: 10px !important;
+  }
+
+
+
+img#Payment_card {
+    width: 200px !important;
+    height: 100px !important
+}
+
+img#showaround_card{
+    width: 400px !important;
+    height: 200px !important
+}
+
+@media only screen and (max-width:600px) {
+    #videos_Card{
+        display: block !important;
+        float: left !important;
+    }
+   
+}
+
+.Plan__right {
+    width: 500px !important;
+    float: left !important;
+}

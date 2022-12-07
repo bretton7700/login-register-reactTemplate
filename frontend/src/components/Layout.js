@@ -1,16 +1,25 @@
 import { Outlet } from "react-router-dom";
 import Footer from './Footer';
-
-import Navbar from "./Navbar";
-
+import Sidebar from './Sidebar';
+// import Navbar from "./Navbar";
+import { Header } from "./Header";
 const Layout = () => {
     return (
         <div className="App">
             
             
-            <Navbar />
+            {/* <Navbar /> */}
+            <div className='app' style={{ backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed' }}>
+            <Header />
+            <div className="app__body">
+            <Sidebar />
+            <main>
+
             <Outlet />
+            </main>
             <Footer />
+            </div>
+            </div>
         </div>
     )
 }

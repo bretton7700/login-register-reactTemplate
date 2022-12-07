@@ -8,6 +8,7 @@ import Register from './components/Register';
 import RequireAuth from './components/RequireAuth';
 import Forgotpassword  from './components/Forgotpassword';
 import Unauthorized from './components/Unauthorized';
+import Publishing from './components/Publishing';
 
 const ROLES = {
   'User': 2001,
@@ -39,6 +40,10 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/" element={<Home />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/publishing" element={<Publishing />} />
             </Route>
 
             
