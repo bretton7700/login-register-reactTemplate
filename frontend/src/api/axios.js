@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'http://159.223.233.184:8000';
+const BASE_URL = 'https://backendapp.ndovucloud.com';
 
 
 export default axios.create({

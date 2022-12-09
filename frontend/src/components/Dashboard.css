@@ -131,3 +131,9 @@ img#showaround_card{
     width: 500px !important;
     float: left !important;
 }
+
+.line {
+    display: inline-block;
+    text-decoration: underline;
+    
+}

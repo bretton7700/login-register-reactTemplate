@@ -74,7 +74,7 @@ const Login = () => {
     }, [persist])
 
     return (
-<div class="card">
+<div className="card">
         <section>
            {/* <img src={Ndovucloud}  className='center'/> */}
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>

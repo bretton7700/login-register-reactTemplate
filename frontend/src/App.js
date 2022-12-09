@@ -6,9 +6,11 @@ import Missing from './components/Missing';
 import PersistLogin from './components/PersistLogin';
 import Register from './components/Register';
 import RequireAuth from './components/RequireAuth';
-import Forgotpassword  from './components/Forgotpassword';
+import Forgotpassword from './components/Forgotpassword';
 import Unauthorized from './components/Unauthorized';
 import Publishing from './components/Publishing';
+import Linkedinauthenticate from './components/linkedin/Linkedinauthenticate';
+import Linkedinpost from './components/linkedin/Linkedinpost';
 
 const ROLES = {
   'User': 2001,
@@ -18,15 +20,16 @@ const ROLES = {
 
 function App() {
 
-  return (
-    <>
 
+  return (
+    
       <Routes>
         {/* public routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forgotpassword" element={<Forgotpassword />} />
-        
+
+
         <Route path="/" element={<Layout />}>
           <Route path="unauthorized" element={<Unauthorized />} />
 
@@ -35,22 +38,21 @@ function App() {
 
           <Route element={<PersistLogin />}>
 
-
-            
-
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/" element={<Home />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/linkedinauthenticate" element={<Linkedinauthenticate />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/publishing" element={<Publishing />} />
             </Route>
 
-            
-
-            {/* <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-              <Route path="allparcels" element={<AllParcels />} />
-            </Route> */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/linkedinpost" element={<Linkedinpost />} />
+            </Route>
 
 
 
@@ -64,9 +66,7 @@ function App() {
         <Route path="*" element={<Missing />} />
 
       </Routes>
-    </>
-
-
+    
   );
 }
 

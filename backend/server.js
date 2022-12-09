@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors');
+const cookieSession = require('cookie-session');
 const corsOptions = require('./config/corsOptions');
 const { logger } = require('./middleware/logEvents');
 const errorHandler = require('./middleware/errorHandler');
@@ -11,10 +12,14 @@ const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
 const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3500;
+
+const { sessionName, sessionKeys } = require('./config/config');
+
 
 // Connect to MongoDB
 connectDB();
+
 
 // custom middleware logger
 app.use(logger);
@@ -25,6 +30,9 @@ app.use(credentials);
 
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
+
+
+
 
 // built-in middleware to handle urlencoded form data
 app.set("view engine", "ejs");
@@ -49,7 +57,16 @@ app.use('/forgot-password', require('./routes/forgotpassword'));
 app.use('/reset-password',require('./routes/resetpasswordget'));
 app.use('/reset-password',require('./routes/resetpasswordpost'));
 
+
+
 app.use(verifyJWT);
+app.use(cookieSession({
+    name: sessionName,
+    keys: sessionKeys
+}));
+app.use('/linkedin',require('./routes/api/linkedin'));
+
+
 
 //app.use('/parcels',require('./routes/api/parcel'));
 
@@ -65,6 +82,7 @@ app.all('*', (req, res) => {
 });
 
 app.use(errorHandler);
+mongoose.set('strictQuery', false);
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');

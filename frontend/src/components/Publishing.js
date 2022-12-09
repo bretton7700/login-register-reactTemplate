@@ -1,7 +1,9 @@
 
 import React, { useEffect } from "react";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import ReactPlayer from 'react-player';
+import {  Card, Container, Row } from "react-bootstrap";
+
+
+import { Link } from 'react-router-dom';
 
 
 import "./Dashboard.css";
@@ -33,9 +35,14 @@ const Publishing = () => {
                     <br />
 
                   </p>
-                  <Form.Group>
-                    <Button class='theButton'>< a href="https://linkedin.ndovucloud.com">Click Here to Access</a></Button>
-                  </Form.Group>
+
+                  <p style={{color:'blue'}}>
+                
+                <span className="line">
+                <Link to="/linkedinauthenticate">Click Here To Access Linkedin</Link>
+                </span>
+                </p>
+                  
                 </div>
 
 
@@ -46,22 +53,7 @@ const Publishing = () => {
       </Card>
 
 
-      <Card id='videos_Card' className="border-ndovu rounded-0 my-3" style={{ margin: '0 0 0 40px', float: 'right', alignItems: 'center' }}>
-        <Col>
-
-          <Col style={{ padding: '1px 4px 2px 2px ' }} sm={4}>
-            <div style={{ width: '300%', height: '100%' }}>
-              <ReactPlayer height="720" width="300" url='https://youtu.be/xnAWq4gf7Gg' />
-            </div>
-
-          </Col>
-
-       
-        </Col>
-
-
-
-      </Card>
+   
     </>
   )
 }

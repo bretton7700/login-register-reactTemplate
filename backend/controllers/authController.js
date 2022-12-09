@@ -34,12 +34,12 @@ const handleLogin = async (req, res) => {
         // Saving refreshToken with current user
         foundUser.refreshToken = refreshToken;
         const result = await foundUser.save();
-        // console.log(result);
-        // console.log(roles);
+        console.log(result);
+        console.log(roles);
 
         // Creates Secure Cookie with refresh token
-        res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
-
+        res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
+        
         // Send authorization roles and access token to user
         res.json({ email,roles, accessToken });
 
@@ -63,7 +63,7 @@ const handleReset = async (req, res) => {
             }
     );
 
-    const link =`http://159.223.233.184:8000/reset-password/${foundUser._id}/${token}`;
+    const link =`http://165.232.156.41:8000/reset-password/${foundUser._id}/${token}`;
     if(foundUser) {
         const msg = {
             to: foundUser.email,
