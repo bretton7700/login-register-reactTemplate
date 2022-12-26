@@ -18,7 +18,7 @@ const Linkedinauthenticate = () => {
 const handleSubmit = async () => {
 
   try{
-    await axiosPrivate.get("https://backendapp.ndovucloud.com/linkedin").then((response) => {
+    await axiosPrivate.get("https://backpub.ndovucloud.com/linkedin").then((response) => {
       window.location.replace(response.data);
   })
   } catch(err){

@@ -6,8 +6,8 @@ const allowedOrigins = [
   // 'http://localhost:3000',
   //  'http://165.232.156.41:3001',
   // 'http://165.232.156.41:3000',
-  'https://application.ndovucloud.com',
-  'https://www.application.ndovucloud.com'
+  'https://frontpub.ndovucloud.com',
+  'https://www.frontpub.ndovucloud.com'
 ];
 
 module.exports = allowedOrigins;
