@@ -9,7 +9,7 @@ import '../sidebar.css';
 
 const Linkedinpost = () => {
     let [searchParams, setSearchParams] = useSearchParams();
-    searchParams.get("code")
+    const code = searchParams.get("code")
 
     alert(searchParams.get("code"))
     
@@ -18,8 +18,8 @@ const Linkedinpost = () => {
     const handleClosing = () => setShowing(false);
 
 
-    const [databaseName, setdatabaseName] = useState('')
-    const [rootPassword, setrootPassword] = useState('')
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
     const [databaseList, setdatabaseList] = useState([])
     const Admin_Email = global.mail;
 
@@ -27,6 +27,36 @@ const Linkedinpost = () => {
         window.scrollTo(0,0);
         
     }, [])
+
+    const SendPost = (event) => {
+
+        event.preventDefault();
+
+
+        if (title.length === 0 | description.length === 0) {
+            alert('please fill in the details');
+
+        } else {
+            Axios.get("https://backpub.ndovucloud.com/getAccessToken",
+                {
+                    params: {
+                        code: code,
+                    },
+                })
+                .then((response) => {
+                    const data = response.data;
+                    alert(data);
+                    
+                })
+
+
+
+
+        }
+
+
+    }
+
 
     
     
@@ -40,7 +70,7 @@ const Linkedinpost = () => {
                         <div className="accordion-item" id="accordionFlushExample">
 
                             <div className="accordion-body">
-                                <Card.Title> You have successfully Created a Mysql Database</Card.Title>
+                                <Card.Title>  successfully Sent Post</Card.Title>
 
                             </div>
 
@@ -51,31 +81,32 @@ const Linkedinpost = () => {
             </div>
 
             <Card className="border-ndovu rounded-0 my-3" style={{ maxWidth: '900px', width: '100%' }}>
-                <Card.Header>Database Creation</Card.Header>
+                <Card.Header>Send Post</Card.Header>
                 <Card.Body>
-                    <Form>
+                    <Form onSubmit={SendPost}>
+                        
 
                         <Row>
                             <Col sm={6}>
 
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Database  Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter the name of the database " name="databasename" value={databaseName} required onChange={(e) => { setdatabaseName(e.target.value); }} />
-                                    <Form.Control.Feedback type="invalid">database name  is  required</Form.Control.Feedback>
+                                    <Form.Label>Title</Form.Label>
+                                    <Form.Control type="text" name="title" id="title" placeholder="Title"  value={title} required onChange={(e) => { setTitle(e.target.value); }} />
+                                    <Form.Control.Feedback type="invalid">title is  required</Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
 
                             <Col sm={6}>
 
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Root Password</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter the root password of your database" name="rootPassword" value={rootPassword} required onChange={(e) => { setrootPassword(e.target.value); }} />
-                                    <Form.Control.Feedback type="invalid">root password  required</Form.Control.Feedback>
+                                    <Form.Label>Description</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Your Description" name="rootPassword" value={rootPassword} required onChange={(e) => { setDescription(e.target.value); }} />
+                                    <Form.Control.Feedback type="invalid">description  required</Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                         </Row>
 
-                        <Button variant="primary" size="sm" type="submit" id='yenu' >Create Database</Button>{" "}
+                        <Button variant="primary" size="sm" type="submit" id='share' >Share Now</Button>{" "}
                     </Form>
 
 
