@@ -21,11 +21,11 @@ const publish = async (req,res) =>{
             const response = await linkedinController.publishContent(req, content);
             console.log('.......sending post.....')
             console.log('post sent')
-            res.send('success')
+            res.status(200)
 
         } catch (err) {
             console.log('.......post not sent.....')
-            res.send('failed')
+            res.status(500)
 
         }
     }
