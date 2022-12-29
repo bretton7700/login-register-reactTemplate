@@ -1,9 +1,10 @@
-import Axios from 'axios';
+
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Modal, Row } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 import '../sidebar.css';
 
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 
 
@@ -11,41 +12,57 @@ const Linkedinpost = () => {
     let [searchParams, setSearchParams] = useSearchParams();
     const code = searchParams.get("code")
 
-    alert(searchParams.get("code"))
+    const axiosPrivate = useAxiosPrivate();
     
     const [showing, setShowing] = useState(false);
     const handleShowing = () => setShowing(true);
     const handleClosing = () => setShowing(false);
 
 
-    const [title, setTitle] = useState('')
+    
     const [description, setDescription] = useState('')
-    const [databaseList, setdatabaseList] = useState([])
-    const Admin_Email = global.mail;
+    const [userID, setUserID] = useState('')
+    
 
     useEffect(() => {
         window.scrollTo(0,0);
         
     }, [])
 
-    const SendPost = (event) => {
+    const SendPost = async (event) => {
 
         event.preventDefault();
 
 
-        if (title.length === 0 | description.length === 0) {
+        if ( description.length === 0) {
             alert('please fill in the details');
 
         } else {
-            Axios.get("https://backpub.ndovucloud.com/getAccessToken",
+            await axiosPrivate.get("/linkedin/callback",
                 {
                     params: {
                         code: code,
                     },
                 })
-                .then((response) => {
-                    const data = response.data;
-                    alert(data);
+                .then(() => {
+                   
+                    axiosPrivate.get("/linkedin/userID").then((response) =>{
+                        const data  = response.data;
+                        setUserID(data)
+
+                    }).then(() =>{
+                        axiosPrivate.post('/linkedin/publish',
+                        {
+
+                           
+                            description: description,
+                            userID: userID,
+
+
+                        })
+                    })
+
+                  
                     
                 })
 
@@ -87,20 +104,13 @@ const Linkedinpost = () => {
                         
 
                         <Row>
-                            <Col sm={6}>
-
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Title</Form.Label>
-                                    <Form.Control type="text" name="title" id="title" placeholder="Title"  value={title} required onChange={(e) => { setTitle(e.target.value); }} />
-                                    <Form.Control.Feedback type="invalid">title is  required</Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
+                            
 
                             <Col sm={6}>
 
                                 <Form.Group className="mb-3">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Your Description" name="rootPassword" value={rootPassword} required onChange={(e) => { setDescription(e.target.value); }} />
+                                    <Form.Control type="text" placeholder="Enter Your Description" name="rootPassword" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
                                     <Form.Control.Feedback type="invalid">description  required</Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
