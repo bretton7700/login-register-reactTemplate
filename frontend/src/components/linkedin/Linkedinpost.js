@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import '../sidebar.css';
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-
+const PUBLISH_URL = '/linkedin/publish';
 
 
 const Linkedinpost = () => {
@@ -21,14 +21,14 @@ const Linkedinpost = () => {
 
 
     const [description, setDescription] = useState('')
-   
+
 
 
     useEffect(() => {
         window.scrollTo(0, 0);
 
 
-       
+
 
 
     }, [])
@@ -47,26 +47,25 @@ const Linkedinpost = () => {
                     params: {
                         code: code,
                     },
-                }) .then(async () => {
+                }).then(async () => {
                     // Wait for the get request to resolve
                     const response = await axiosPrivate.get("/linkedin/userID");
                     // Set the userID variable using the response data
-                    
-                   
+
+
                     // Wait for the post request to resolve
-                    await axiosPrivate.post('/linkedin/publish',
-                      JSON.stringify({
-                        description: description,
-                        
-                      }), {
-                      headers: { 'Content-Type': 'application/json' },
-                      withCredentials: true
+                    await axiosPrivate.post(PUBLISH_URL,
+                        JSON.stringify({
+                            description: description,
+
+                        }), {
+                        headers: { 'Content-Type': 'application/json' },
+                        withCredentials: true
+                    }).then((response) =>{
+                        alert(response.status)
                     })
-                  }).then((response) =>{
-                    const feedback = response.data;
-                    alert(feedback)
-                  })
-                  
+                })
+
 
 
 
