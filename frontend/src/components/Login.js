@@ -66,7 +66,7 @@ const Login = () => {
     }
 
     const togglePersist = () => {
-        setPersist(prev => !prev);
+        setPersist(true);
     }
 
     useEffect(() => {
@@ -102,10 +102,12 @@ const Login = () => {
                 <button style={{marginTop: '1rem'}}>Sign In</button>
                 <div className="persistCheck">
                     <input
-                        type="checkbox"
+                
+                        type="hidden"
                         id="persist"
                         onChange={togglePersist}
                         checked={persist}
+                        
                     />
                     <label htmlFor="persist">Trust This Device</label>
                 </div>

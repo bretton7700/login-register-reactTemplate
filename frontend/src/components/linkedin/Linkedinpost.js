@@ -13,20 +13,24 @@ const Linkedinpost = () => {
     const code = searchParams.get("code")
 
     const axiosPrivate = useAxiosPrivate();
-    
+
     const [showing, setShowing] = useState(false);
     const handleShowing = () => setShowing(true);
     const handleClosing = () => setShowing(false);
 
 
-    
+
     const [description, setDescription] = useState('')
-    const [userID, setUserID] = useState('')
-    
+   
+
 
     useEffect(() => {
-        window.scrollTo(0,0);
-        
+        window.scrollTo(0, 0);
+
+
+       
+
+
     }, [])
 
     const SendPost = async (event) => {
@@ -34,7 +38,7 @@ const Linkedinpost = () => {
         event.preventDefault();
 
 
-        if ( description.length === 0) {
+        if (description.length === 0) {
             alert('please fill in the details');
 
         } else {
@@ -43,28 +47,23 @@ const Linkedinpost = () => {
                     params: {
                         code: code,
                     },
-                })
-                .then(() => {
-                   
-                    axiosPrivate.get("/linkedin/userID").then((response) =>{
-                        const data  = response.data;
-                        // setUserID(data)
-
-                    }).then((response) =>{
-                        axiosPrivate.post('/linkedin/publish',
-                        {
-
-                           
-                            description: description,
-                            userID: response.data,
-
-
-                        })
-                    })
-
-                  
+                }) .then(async () => {
+                    // Wait for the get request to resolve
+                    const response = await axiosPrivate.get("/linkedin/userID");
+                    // Set the userID variable using the response data
                     
-                })
+                   
+                    // Wait for the post request to resolve
+                    await axiosPrivate.post('/linkedin/publish',
+                      JSON.stringify({
+                        description: description,
+                        
+                      }), {
+                      headers: { 'Content-Type': 'application/json' },
+                      withCredentials: true
+                    })
+                  })
+                  
 
 
 
@@ -72,11 +71,16 @@ const Linkedinpost = () => {
         }
 
 
+
+
     }
 
 
-    
-    
+
+
+
+
+
 
     return (
         <>
@@ -101,10 +105,10 @@ const Linkedinpost = () => {
                 <Card.Header>Send Post</Card.Header>
                 <Card.Body>
                     <Form onSubmit={SendPost}>
-                        
+
 
                         <Row>
-                            
+
 
                             <Col sm={6}>
 
