@@ -5,7 +5,7 @@ import {  Card, Container, Row } from "react-bootstrap";
 
 import { Link } from 'react-router-dom';
 
-
+import { Alert, AlertTitle } from "@mui/material";
 import "./Dashboard.css";
 
 
@@ -36,12 +36,10 @@ const Publishing = () => {
 
                   </p>
 
-                  <p style={{color:'blue'}}>
-                
-                <span className="line">
-                <Link to="/linkedinauthenticate">Click Here To Access Linkedin</Link>
-                </span>
-                </p>
+               
+                <Alert severity="info">
+                  <AlertTitle><a><Link to="/linkedinauthenticate">Click Here To Access Linkedin</Link></a></AlertTitle>
+                </Alert>
                   
                 </div>
 

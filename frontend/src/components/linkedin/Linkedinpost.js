@@ -62,6 +62,9 @@ const Linkedinpost = () => {
                       headers: { 'Content-Type': 'application/json' },
                       withCredentials: true
                     })
+                  }).then((response) =>{
+                    const feedback = response.data;
+                    alert(feedback)
                   })
                   
 
