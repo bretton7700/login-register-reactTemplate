@@ -48,15 +48,15 @@ const Linkedinpost = () => {
                    
                     axiosPrivate.get("/linkedin/userID").then((response) =>{
                         const data  = response.data;
-                        setUserID(data)
+                        // setUserID(data)
 
-                    }).then(() =>{
+                    }).then((response) =>{
                         axiosPrivate.post('/linkedin/publish',
                         {
 
                            
                             description: description,
-                            userID: userID,
+                            userID: response.data,
 
 
                         })
