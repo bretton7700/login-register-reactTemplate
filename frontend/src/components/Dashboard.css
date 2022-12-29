@@ -80,11 +80,7 @@
     
 }
 
-.Plan a{
-    color: white;
-    text-decoration: none;
-    
-}
+
 
 .PhoneInputInput {
     flex: 1 1;
@@ -132,8 +128,9 @@ img#showaround_card{
     float: left !important;
 }
 
-.line {
-    display: inline-block;
-    text-decoration: underline;
+
+.Plan a{
+    color: blue;
+    text-decoration: none;
     
 }
