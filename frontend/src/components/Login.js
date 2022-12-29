@@ -65,13 +65,11 @@ const Login = () => {
         }
     }
 
-    const togglePersist = () => {
-        setPersist(true);
-    }
+    
 
     useEffect(() => {
-        localStorage.setItem("persist", persist);
-    }, [persist])
+        localStorage.setItem("persist", true);
+    }, [])
 
     return (
 <div className="card">
@@ -105,11 +103,10 @@ const Login = () => {
                 
                         type="hidden"
                         id="persist"
-                        onChange={togglePersist}
-                        checked={persist}
+                        checked
                         
                     />
-                    <label htmlFor="persist">Trust This Device</label>
+                  
                 </div>
             </form>
             <p style={{color:'white'}}>
