@@ -7,9 +7,10 @@ const getUserID = async (req,res) =>{
     } else {
         try {
             const id = await linkedinController.getLinkedinId(req);
+            req.session.userId  = id
             // BGN 13:18 CHECK IF WE GOT THE ID
             console.log('......the ID........')
-            console.log(id)
+            console.log(request.session.userId)
             res.json(id)
         } catch (err) {
             res.send(err);

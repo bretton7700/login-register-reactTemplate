@@ -1,16 +1,19 @@
 const linkedinController = require('../controllers/linkedinController');
 
 const publish = async (req,res) =>{
-    const {  description,  userID } = req.body;
+    const {  description } = req.body;
+    console.log(req.body.description);
+    console.log('above is the descr below userid')
+    
    
 
-    if (!Boolean(description) || !Boolean(userID)) {
+    if (!Boolean(description) ) {
         console.log('one of the values is empty')
     } else {
         const content = {
            
             description: description,
-            userID: userID
+            
             
         };
 

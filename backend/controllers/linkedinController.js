@@ -27,15 +27,15 @@ const  getLinkedinId = async(req) => {
     });
 }
 
-const  publishContent = async(req, linkedinId, content) =>{
+const  publishContent = async(req,  content) =>{
     const url = 'https://api.linkedin.com/v2/ugcPosts';
-    const {  description, userID } = content;
+    const {  description } = content;
 
 
     
     // BGN TEXT SHARE ON LINKEDIN
     const body = {
-        "author": 'urn:li:person:' + userID,
+        "author": 'urn:li:person:' + req.session.userId,
         "lifecycleState": "PUBLISHED",
         "specificContent": {
             "com.linkedin.ugc.ShareContent": {
@@ -49,6 +49,7 @@ const  publishContent = async(req, linkedinId, content) =>{
             "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
         }
     };
+    
 
 
 
