@@ -10,7 +10,7 @@ const getUserID = async (req,res) =>{
             req.session.userId  = id
             // BGN 13:18 CHECK IF WE GOT THE ID
             console.log('......the ID........')
-            console.log(request.session.userId)
+            console.log(req.session.userId)
             res.json(id)
         } catch (err) {
             res.send(err);
