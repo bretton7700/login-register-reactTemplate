@@ -9,6 +9,71 @@ const handleGettingUrl = async (req, res) => {
     res.json(url);
 }
 
+const  getLinkedinId = async(req) => {
+    return new Promise((resolve, reject) => {
+        const url = 'https://api.linkedin.com/v2/me';
+        const headers = {
+            'Authorization': 'Bearer ' + req.session.token,
+            'cache-control': 'no-cache',
+            'X-Restli-Protocol-Version': '2.0.0' 
+        };
+
+        request.get({ url: url, headers: headers }, (err, response, body) => {
+            if(err) {
+                reject(err);
+            }
+            resolve(JSON.parse(body).id);
+        });
+    });
+}
+
+const  publishContent = async(req, linkedinId, content) =>{
+    const url = 'https://api.linkedin.com/v2/ugcPosts';
+    const {  description, userID } = content;
+
+
+    
+    // BGN TEXT SHARE ON LINKEDIN
+    const body = {
+        "author": 'urn:li:person:' + userID,
+        "lifecycleState": "PUBLISHED",
+        "specificContent": {
+            "com.linkedin.ugc.ShareContent": {
+                "shareCommentary": {
+                    "text": description
+                },
+                "shareMediaCategory": "NONE"
+            }
+        },
+        "visibility": {
+            "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
+        }
+    };
+
+
+
+   
+//ARTICLE SHARE ON LINKEDIN
+    
+    const headers = {
+        'Authorization': 'Bearer ' + req.session.token,
+        'cache-control': 'no-cache',
+        'X-Restli-Protocol-Version': '2.0.0',
+        'x-li-format': 'json'
+    };
+
+    return new Promise((resolve, reject) => {
+        request.post({ url: url, json: body, headers: headers}, (err, response, body) => {
+            if(err) {
+                reject(err);
+            }
+            resolve(body);
+        });
+    });
+
+}
+
+
 const handleGetAccessToken = async (req,res) =>{
     const { code } = req.query;
     const body ={
@@ -31,4 +96,4 @@ const handleGetAccessToken = async (req,res) =>{
 }
 
 
-module.exports = { handleGettingUrl , handleGetAccessToken }
+module.exports = { handleGettingUrl , handleGetAccessToken, getLinkedinId, publishContent }
