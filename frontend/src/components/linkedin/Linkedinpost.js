@@ -20,8 +20,15 @@ const Linkedinpost = () => {
     const handleClosing = () => setShowing(false);
 
     const [show, setShow] = useState(false);
-
-    const handleShow = () => setShow(true);
+    
+    const handleShow = () => {
+        if(description.length === 0){
+        alert('please fill in the description')
+        }
+        else{
+            setShow(true)
+        }
+    }
 
     const [description, setDescription] = useState('')
 
