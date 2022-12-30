@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Dropdown, Modal, Row } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 import '../sidebar.css';
 
@@ -61,7 +61,7 @@ const Linkedinpost = () => {
                         }), {
                         headers: { 'Content-Type': 'application/json' },
                         withCredentials: true
-                    }).then((response) =>{
+                    }).then((response) => {
                         alert(response.status)
                     })
                 })
@@ -106,7 +106,7 @@ const Linkedinpost = () => {
             <Card className="border-ndovu rounded-0 my-3" style={{ maxWidth: '900px', width: '100%' }}>
                 <Card.Header>Send Post</Card.Header>
                 <Card.Body>
-                    <Form onSubmit={SendPost}>
+                    <Form >
 
 
                         <Row>
@@ -121,8 +121,18 @@ const Linkedinpost = () => {
                                 </Form.Group>
                             </Col>
                         </Row>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                Choose One
+                            </Dropdown.Toggle>
 
-                        <Button variant="primary" size="sm" type="submit" id='share' >Share Now</Button>{" "}
+                            <Dropdown.Menu>
+                                <Dropdown.Item  onClick={SendPost}>Share Now</Dropdown.Item>
+                                <Dropdown.Item  onClick={() => console.log('Schedule Post clicked')}>Schedule Post</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                        {/* <Button variant="primary" size="sm" type="submit" id='share' >Share Now</Button>{" "} */}
                     </Form>
 
 
