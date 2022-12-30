@@ -6,7 +6,7 @@ import '../sidebar.css';
 import DateTimePicker from 'react-datetime-picker';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const PUBLISH_URL = '/linkedin/publish';
-
+const SCHEDULE_URL = '/linkedin/schedule';
 
 const Linkedinpost = () => {
     let [searchParams, setSearchParams] = useSearchParams();
@@ -38,6 +38,30 @@ const Linkedinpost = () => {
         window.scrollTo(0, 0);
 
     }, [])
+
+    const handleSchedule = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axiosPrivate.post(SCHEDULE_URL,
+                JSON.stringify({  description: description, }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                })
+            // TODO: remove console.logs before deployment
+            console.log(JSON.stringify(response?.data));
+
+            setDescription('');
+            
+        } catch (err) {
+            if (!err.response) {
+                alert('No Server Response');
+            } else {
+                alert('Scheduling Failed')
+            }
+            
+        }
+    }
 
     const SendPost = async (event) => {
 
@@ -122,7 +146,7 @@ const Linkedinpost = () => {
                                             <DateTimePicker onChange={onChange} value={value} />
                                         </Form.Group>
                                         <Form.Group>
-                                            <Button variant="danger" size="sm">Schedule</Button>{" "}
+                                            <Button variant="danger" size="sm" onClick={handleSchedule}>Schedule</Button>{" "}
 
                                         </Form.Group>
                                     </Form>
