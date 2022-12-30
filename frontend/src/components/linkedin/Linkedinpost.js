@@ -43,7 +43,8 @@ const Linkedinpost = () => {
         e.preventDefault();
         try {
             const response = await axiosPrivate.post(SCHEDULE_URL,
-                JSON.stringify({  description: description, }),
+                JSON.stringify({  description: description,
+                scheduleTime: value }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
