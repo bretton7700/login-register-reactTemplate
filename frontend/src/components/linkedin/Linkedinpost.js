@@ -20,12 +20,12 @@ const Linkedinpost = () => {
     const handleClosing = () => setShowing(false);
 
     const [show, setShow] = useState(false);
-    
+
     const handleShow = () => {
-        if(description.length === 0){
-        alert('please fill in the description')
+        if (description.length === 0) {
+            alert('please fill in the description')
         }
-        else{
+        else {
             setShow(true)
         }
     }
@@ -41,27 +41,38 @@ const Linkedinpost = () => {
 
     const handleSchedule = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axiosPrivate.post(SCHEDULE_URL,
-                JSON.stringify({  description: description,
-                scheduleTime: value }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                })
-            // TODO: remove console.logs before deployment
-            console.log(JSON.stringify(response?.data));
+        await axiosPrivate.get("/linkedin/callback",
+            {
+                params: {
+                    code: code,
+                },
+            }).then(async () => {
+                // Wait for the get request to resolve
+                const response = await axiosPrivate.get("/linkedin/userID");
+                try {
+                    const response = await axiosPrivate.post(SCHEDULE_URL,
+                        JSON.stringify({
+                            description: description,
+                            scheduleTime: value
+                        }),
+                        {
+                            headers: { 'Content-Type': 'application/json' },
+                            withCredentials: true
+                        })
+                    // TODO: remove console.logs before deployment
+                    console.log(JSON.stringify(response?.data));
 
-            setDescription('');
-            
-        } catch (err) {
-            if (!err.response) {
-                alert('No Server Response');
-            } else {
-                alert('Scheduling Failed')
-            }
-            
-        }
+                    setDescription('');
+
+                } catch (err) {
+                    if (!err.response) {
+                        alert('No Server Response');
+                    } else {
+                        alert('Scheduling Failed')
+                    }
+
+                }
+            })
     }
 
     const SendPost = async (event) => {
@@ -139,7 +150,7 @@ const Linkedinpost = () => {
                     <Modal.Body>
 
                         <div className="accordion-item" id="accordionFlushExample" >
-                            <div  className="accordion-collapse collapse show"  data-bs-parent="#accordionFlushExample">
+                            <div className="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
                                 <div className="accordion-body">
                                     <Card.Title>Select A Date and Time</Card.Title>
                                     <Form>
