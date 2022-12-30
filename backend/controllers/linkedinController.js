@@ -1,6 +1,7 @@
 const request = require('request');
 const { clientId, clientSecret, authorizationURL, redirectURI, accessTokenURL }= require('../config/config');
-
+const User = require('../model/User');
+const Posts = require('../model/Post')
 const handleGettingUrl = async (req, res) => {
     const state = Buffer.from(Math.round(Math.random() * Date.now()).toString()).toString('hex');
     const scope = encodeURIComponent('r_liteprofile r_emailaddress w_member_social');
@@ -96,5 +97,26 @@ const handleGetAccessToken = async (req,res) =>{
     });
 }
 
+const handleScheduling = async (req, res) => {
 
-module.exports = { handleGettingUrl , handleGetAccessToken, getLinkedinId, publishContent }
+    if (!req?.body?.description || !req?.body?.scheduleTime ) {
+        return res.status(400).json({ 'message': 'all details not added' })
+    }
+
+    try {
+        const result = await Posts.create({
+            "description": req.body.description,
+            "userID": req.session.userId,
+            "scheduledTime": req.body.scheduleTime
+            
+        });
+        console.log(result);
+        res.status(201).json({ 'success': `New post Scheduled  ` });
+    } catch (err) {
+        console.error(err);
+
+    }
+}
+
+
+module.exports = { handleGettingUrl , handleGetAccessToken,handleScheduling, getLinkedinId, publishContent }
