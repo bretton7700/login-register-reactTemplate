@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Dropdown, Modal, Row } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 import '../sidebar.css';
-
+import DateTimePicker from 'react-datetime-picker';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const PUBLISH_URL = '/linkedin/publish';
 
@@ -11,14 +11,17 @@ const PUBLISH_URL = '/linkedin/publish';
 const Linkedinpost = () => {
     let [searchParams, setSearchParams] = useSearchParams();
     const code = searchParams.get("code")
-
+    const [value, onChange] = useState(new Date());
     const axiosPrivate = useAxiosPrivate();
 
     const [showing, setShowing] = useState(false);
+
     const handleShowing = () => setShowing(true);
     const handleClosing = () => setShowing(false);
 
+    const [show, setShow] = useState(false);
 
+    const handleShow = () => setShow(true);
 
     const [description, setDescription] = useState('')
 
@@ -26,10 +29,6 @@ const Linkedinpost = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-
-
-
-
 
     }, [])
 
@@ -103,6 +102,31 @@ const Linkedinpost = () => {
                 </Modal>
             </div>
 
+            <div>
+                <Modal show={show} >
+                    <Modal.Body>
+
+                        <div className="accordion-item" id="accordionFlushExample" >
+                            <div  className="accordion-collapse collapse show"  data-bs-parent="#accordionFlushExample">
+                                <div className="accordion-body">
+                                    <Card.Title>Select A Date and Time</Card.Title>
+                                    <Form>
+                                        <Form.Group>
+                                            <DateTimePicker onChange={onChange} value={value} />
+                                        </Form.Group>
+                                        <Form.Group>
+                                            <Button variant="danger" size="sm">Schedule</Button>{" "}
+
+                                        </Form.Group>
+                                    </Form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Modal.Body>
+                </Modal>
+            </div>
+
             <Card className="border-ndovu rounded-0 my-3" style={{ maxWidth: '900px', width: '100%' }}>
                 <Card.Header>Send Post</Card.Header>
                 <Card.Body>
@@ -127,8 +151,8 @@ const Linkedinpost = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item  onClick={SendPost}>Share Now</Dropdown.Item>
-                                <Dropdown.Item  onClick={() => console.log('Schedule Post clicked')}>Schedule Post</Dropdown.Item>
+                                <Dropdown.Item onClick={SendPost}>Share Now</Dropdown.Item>
+                                <Dropdown.Item onClick={handleShow}>Schedule Post</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
 
