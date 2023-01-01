@@ -34,7 +34,11 @@ const postSchema = new Schema({
     scheduledTime:{
         type: String,
         default: Date.now
-    } 
+    },
+    scheduleStatus: {
+        type: String,
+        default: 'Sent'
+    }
 
 });
 

@@ -65,9 +65,12 @@ const PostingSchedules = async (req, description) => {
     });
   }
   
-const sendPosts = async () => {
-    // Find all posts with scheduledTime in the past
-    const posts = await Posts.find({ scheduledTime: { $lte: new Date() } });
+  const sendPosts = async () => {
+    // Find all posts with scheduledTime in the past and scheduleStatus not set to "sent"
+    const posts = await Posts.find({
+        scheduledTime: { $lte: new Date() },
+        scheduleStatus: { $ne: "sent" }
+    });
     console.log(posts)
   
     // Send each post
@@ -80,6 +83,7 @@ const sendPosts = async () => {
       await PostingSchedules({ session: { userId: userID, token: token } }, description);
     }
   };
+
   
 
 const  publishContent = async(req,  content) =>{

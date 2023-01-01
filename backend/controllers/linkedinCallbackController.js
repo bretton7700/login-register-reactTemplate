@@ -15,6 +15,8 @@ const handleCallback = async (req, res) => {
         res.json(data)
         console.log('...............token.............')
         console.log(data.access_token)
+        console.log('.....generating refresh token')
+        console.log(data)
 
 
     } catch (err) {
