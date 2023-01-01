@@ -73,7 +73,7 @@ const PostingSchedules = async (req, description) => {
     });
     console.log(posts)
   
-    // Send each post
+    // Send each post and update the scheduleStatus to "sent"
     for (const post of posts) {
       const userID = post.userID;
       const description = post.description;
@@ -81,6 +81,9 @@ const PostingSchedules = async (req, description) => {
       // You can pass in any request object as the first argument to the function
       // The second argument should be the post object itself
       await PostingSchedules({ session: { userId: userID, token: token } }, description);
+      
+      // Update the scheduleStatus to "sent"
+      await Posts.updateOne({ _id: post._id }, { $set: { scheduleStatus: "sent" } });
     }
   };
 
