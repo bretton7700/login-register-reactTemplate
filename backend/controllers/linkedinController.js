@@ -1,7 +1,7 @@
 const request = require('request');
 const { clientId, clientSecret, authorizationURL, redirectURI, accessTokenURL }= require('../config/config');
-const User = require('../model/User');
 const Posts = require('../model/Post')
+
 const handleGettingUrl = async (req, res) => {
     const state = Buffer.from(Math.round(Math.random() * Date.now()).toString()).toString('hex');
     const scope = encodeURIComponent('r_liteprofile r_emailaddress w_member_social');
@@ -27,6 +27,60 @@ const  getLinkedinId = async(req) => {
         });
     });
 }
+
+const PostingSchedules = async (req, description) => {
+    // Rest of the function stays the same
+    const url = 'https://api.linkedin.com/v2/ugcPosts';
+    const body = {
+      "author": 'urn:li:person:' + req.session.userId,
+      "lifecycleState": "PUBLISHED",
+      "specificContent": {
+        "com.linkedin.ugc.ShareContent": {
+          "shareCommentary": {
+            "text": description
+          },
+          "shareMediaCategory": "NONE"
+        }
+      },
+      "visibility": {
+        "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
+      }
+    };
+  
+    // Rest of the function stays the same
+    const headers = {
+      'Authorization': 'Bearer ' + req.session.token,
+      'cache-control': 'no-cache',
+      'X-Restli-Protocol-Version': '2.0.0',
+      'x-li-format': 'json'
+    };
+  
+    return new Promise((resolve, reject) => {
+      request.post({ url: url, json: body, headers: headers}, (err, response, body) => {
+        if(err) {
+          reject(err);
+        }
+        resolve(body);
+      });
+    });
+  }
+  
+const sendPosts = async () => {
+    // Find all posts with scheduledTime in the past
+    const posts = await Posts.find({ scheduledTime: { $lte: new Date() } });
+    console.log(posts)
+  
+    // Send each post
+    for (const post of posts) {
+      const userID = post.userID;
+      const description = post.description;
+      const token = post.token;
+      // You can pass in any request object as the first argument to the function
+      // The second argument should be the post object itself
+      await PostingSchedules({ session: { userId: userID, token: token } }, description);
+    }
+  };
+  
 
 const  publishContent = async(req,  content) =>{
     const url = 'https://api.linkedin.com/v2/ugcPosts';
@@ -107,7 +161,8 @@ const handleScheduling = async (req, res) => {
         const result = await Posts.create({
             "description": req.body.description,
             "userID": req.session.userId,
-            "scheduledTime": req.body.scheduleTime
+            "scheduledTime": req.body.scheduleTime,
+            "token": req.session.token
             
         });
         console.log(result);
@@ -119,4 +174,4 @@ const handleScheduling = async (req, res) => {
 }
 
 
-module.exports = { handleGettingUrl , handleGetAccessToken,handleScheduling, getLinkedinId, publishContent }
+module.exports = { handleGettingUrl ,sendPosts, handleGetAccessToken,handleScheduling, getLinkedinId, publishContent }

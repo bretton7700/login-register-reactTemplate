@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cron = require('cron');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -13,7 +14,7 @@ const credentials = require('./middleware/credentials');
 const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
 const PORT = process.env.PORT || 3500;
-
+const sendPosts = require('./controllers/linkedinController')
 const { sessionName, sessionKeys } = require('./config/config');
 
 
@@ -65,7 +66,9 @@ app.use(cookieSession({
     keys: sessionKeys
 }));
 app.use('/linkedin',require('./routes/api/linkedin'));
-
+// Set up the cron job to run every minute
+const job = new cron.CronJob('* * * * *', sendPosts.sendPosts);
+job.start();
 
 
 //app.use('/parcels',require('./routes/api/parcel'));

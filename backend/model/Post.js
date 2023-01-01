@@ -6,6 +6,10 @@ const postSchema = new Schema({
         type: String,
         default: null
     } ,
+    token:{
+        type: String,
+        default: null
+    } ,
     description:{
         type: String,
         required: true
