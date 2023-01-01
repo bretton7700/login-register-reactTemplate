@@ -30,6 +30,8 @@ const Linkedinpost = () => {
         }
     }
 
+    const handleClose =() => setShow(false);
+
     const [description, setDescription] = useState('')
 
 
@@ -41,84 +43,79 @@ const Linkedinpost = () => {
 
     const handleSchedule = async (e) => {
         e.preventDefault();
-        await axiosPrivate.get("/linkedin/callback",
-            {
-                params: {
-                    code: code,
-                },
-            }).then(async () => {
-                // Wait for the get request to resolve
-                const response = await axiosPrivate.get("/linkedin/userID");
-                try {
-                    const response = await axiosPrivate.post(SCHEDULE_URL,
-                        JSON.stringify({
-                            description: description,
-                            scheduleTime: value
-                        }),
-                        {
-                            headers: { 'Content-Type': 'application/json' },
-                            withCredentials: true
-                        })
-                    // TODO: remove console.logs before deployment
-                    console.log(JSON.stringify(response?.data));
-
-                    setDescription('');
-
-                } catch (err) {
-                    if (!err.response) {
-                        alert('No Server Response');
-                    } else {
-                        alert('Scheduling Failed')
-                    }
-
-                }
-            })
-    }
+        try {
+          await axiosPrivate.get("/linkedin/callback", {
+            params: {
+              code: code,
+            },
+          });
+      
+          // Wait for the get request to resolve
+          const response = await axiosPrivate.get("/linkedin/userID");
+          // Set the userID variable using the response data
+      
+          // Make a post request and wait for it to resolve
+          const postResponse = await axiosPrivate.post(SCHEDULE_URL,
+            JSON.stringify({
+              description: description,
+              scheduleTime: value
+            }), {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true
+            });
+      
+          // TODO: remove console.logs before deployment
+          console.log(JSON.stringify(postResponse?.data));
+      
+          setDescription('');
+          handleClose();
+        } catch (error) {
+          if (!error.response) {
+            alert('No server response');
+          } else {
+            alert('Scheduling failed');
+          }
+        }
+      };
+      
 
     const SendPost = async (event) => {
-
         event.preventDefault();
-
-
+      
         if (description.length === 0) {
-            alert('please fill in the details');
-
-        } else {
-            await axiosPrivate.get("/linkedin/callback",
-                {
-                    params: {
-                        code: code,
-                    },
-                }).then(async () => {
-                    // Wait for the get request to resolve
-                    const response = await axiosPrivate.get("/linkedin/userID");
-                    // Set the userID variable using the response data
-
-
-                    // Wait for the post request to resolve
-                    await axiosPrivate.post(PUBLISH_URL,
-                        JSON.stringify({
-                            description: description,
-
-                        }), {
-                        headers: { 'Content-Type': 'application/json' },
-                        withCredentials: true
-                    }).then((response) => {
-                        alert(response.status)
-                    })
-                })
-
-
-
-
-
+          alert('Please fill in the details');
+          return;
         }
-
-
-
-
-    }
-
+      
+        try {
+          await axiosPrivate.get("/linkedin/callback", {
+            params: {
+              code: code,
+            },
+          });
+      
+          // Wait for the get request to resolve
+          const response = await axiosPrivate.get("/linkedin/userID");
+          // Set the userID variable using the response data
+      
+          // Wait for the post request to resolve
+          const postResponse = await axiosPrivate.post(PUBLISH_URL,
+            JSON.stringify({
+              description: description,
+            }), {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true
+            });
+      
+          console.log(JSON.stringify(response?.data));
+          setDescription('');
+          handleShowing();
+          setTimeout(handleClosing, 2000);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      
 
 
 
