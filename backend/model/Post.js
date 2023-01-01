@@ -37,7 +37,7 @@ const postSchema = new Schema({
     },
     scheduleStatus: {
         type: String,
-        default: 'Sent'
+        default: 'not sent'
     }
 
 });
