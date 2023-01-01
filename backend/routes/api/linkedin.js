@@ -20,6 +20,7 @@ router.route('/userID')
     
 router.route('/publish')
     .post(verifyRoles(ROLES_LIST.User),publisher.publish)
+    
 router.route('/schedule')
     .post(verifyRoles(ROLES_LIST.User),linkedinController.handleScheduling)
     
