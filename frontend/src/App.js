@@ -11,6 +11,7 @@ import Unauthorized from './components/Unauthorized';
 import Publishing from './components/Publishing';
 import Linkedinauthenticate from './components/linkedin/Linkedinauthenticate';
 import Linkedinpost from './components/linkedin/Linkedinpost';
+import LinkedinCalendar from './components/linkedin/LinkedinCalendar';
 
 const ROLES = {
   'User': 2001,
@@ -52,6 +53,10 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/linkedinpost" element={<Linkedinpost />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/linkedincalendar" element={<LinkedinCalendar />} />
             </Route>
 
 

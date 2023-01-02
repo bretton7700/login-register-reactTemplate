@@ -74,8 +74,8 @@ export const SidebarData = [
         iconOpened: <KeyboardArrowUp/>,
         subNav: [
             {
-                title: "Channels",
-                path: "/channels",
+                title: "Calendar",
+                path: "/linkedincalendar",
                 icon: <Create />,
             },
             {
