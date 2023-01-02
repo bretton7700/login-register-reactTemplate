@@ -182,4 +182,15 @@ const handleScheduling = async (req, res) => {
 }
 
 
-module.exports = { handleGettingUrl ,sendPosts, handleGetAccessToken,handleScheduling, getLinkedinId, publishContent }
+const getUserPosts = async (req,res) =>{
+    if(!req?.params?.email) return res.status(400).json({ 'message':' email required'});
+    const post = await Posts.find({ owner: req.params.email}).exec();
+    if(!post){
+        return res.status(204).json({ 'message': `No posts matches ${req.params.email}`});
+
+    }
+    res.json(post);
+}
+
+
+module.exports = { handleGettingUrl ,getUserPosts,sendPosts, handleGetAccessToken,handleScheduling, getLinkedinId, publishContent }

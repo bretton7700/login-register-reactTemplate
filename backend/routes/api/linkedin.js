@@ -23,5 +23,8 @@ router.route('/publish')
     
 router.route('/schedule')
     .post(verifyRoles(ROLES_LIST.User),linkedinController.handleScheduling)
+
+router.route('/:email')
+.get(verifyRoles(ROLES_LIST.User),linkedinController.getUserPosts)
     
 module.exports = router;
