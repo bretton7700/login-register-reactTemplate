@@ -189,6 +189,9 @@ const getUserPosts = async (req,res) =>{
         return res.status(204).json({ 'message': `No posts matches ${req.params.email}`});
 
     }
+   
+    console.log('.....here is the posts....')
+    console.log(post)
     res.json(post);
 }
 
