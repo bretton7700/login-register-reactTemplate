@@ -38,6 +38,10 @@ const postSchema = new Schema({
     scheduleStatus: {
         type: String,
         default: 'not sent'
+    },
+    owner: {
+        type: String,
+        required: true
     }
 
 });

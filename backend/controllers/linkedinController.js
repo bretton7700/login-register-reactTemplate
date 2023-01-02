@@ -169,7 +169,8 @@ const handleScheduling = async (req, res) => {
             "description": req.body.description,
             "userID": req.session.userId,
             "scheduledTime": req.body.scheduleTime,
-            "token": req.session.token
+            "token": req.session.token,
+            "owner": req.body.owner
             
         });
         console.log(result);
