@@ -4,8 +4,7 @@ import moment from 'moment';
 import {  Card } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 
-import 'react-big-calendar/lib/sass/styles';
-import 'react-big-calendar/lib/addons/dragAndDrop/styles'; // if using DnD
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 const localizer = momentLocalizer(moment);
 
 const LinkedinCalendar = () => {

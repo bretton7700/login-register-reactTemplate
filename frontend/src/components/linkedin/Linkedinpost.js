@@ -8,6 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const PUBLISH_URL = '/linkedin/publish';
 const SCHEDULE_URL = '/linkedin/schedule';
+const userEmail = localStorage.getItem('userEmail');
+console.log(userEmail)
 
 const Linkedinpost = () => {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -59,7 +61,8 @@ const Linkedinpost = () => {
       const postResponse = await axiosPrivate.post(SCHEDULE_URL,
         JSON.stringify({
           description: description,
-          scheduleTime: postDate
+          scheduleTime: postDate,
+          owner: userEmail
         }), {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
