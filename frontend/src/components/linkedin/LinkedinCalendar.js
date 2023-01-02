@@ -15,8 +15,9 @@ const LinkedinCalendar = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
+  const controller = new AbortController();
   
-  const getEvents = async (email) => {
+  const getEvents = async (email,controller) => {
     try {
       const response = await axiosPrivate.get(`/posts/${email}`, {
         signal: controller.signal
@@ -54,7 +55,7 @@ const LinkedinCalendar = () => {
       isMounted = false;
       controller.abort();
     };
-  }, [userEmail]);
+  }, [userEmail,controller]);
 
   return (
     <>
