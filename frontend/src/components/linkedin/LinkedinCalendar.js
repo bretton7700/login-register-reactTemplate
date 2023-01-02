@@ -1,10 +1,11 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import {  Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './calendar.css';
 import { useLocation, useNavigate } from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
@@ -16,20 +17,20 @@ const LinkedinCalendar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const controller = new AbortController();
-  
-  
-  
+
+
+
 
   useEffect(() => {
     let isMounted = true;
-   
 
-    const getEvents = async (email,controller) => {
+
+    const getEvents = async (email, controller) => {
       try {
         const response = await axiosPrivate.get(`/linkedin/${email}`, {
           signal: controller.signal
         });
-  
+
         // map the event data to the expected format
         const calendarEvents = response.data.map(event => ({
           start: moment(event.scheduledTime).toDate(),
@@ -37,7 +38,7 @@ const LinkedinCalendar = () => {
           end: moment(event.scheduledTime).add(1, 'hour').toDate(),
           title: event.description
         }));
-  
+
         // update the events state variable
         isMounted && setEvents(calendarEvents);
       } catch (err) {
@@ -46,9 +47,9 @@ const LinkedinCalendar = () => {
       }
     };
 
-   
 
-    getEvents(userEmail,controller);
+
+    getEvents(userEmail, controller);
 
     return () => {
       isMounted = false;
@@ -70,6 +71,8 @@ const LinkedinCalendar = () => {
               event: 'Post',
               agenda: 'Posts'
             }}
+            // specify the CSS class name
+            className="agenda-button-color"
           />
         </Card.Body>
       </Card>
