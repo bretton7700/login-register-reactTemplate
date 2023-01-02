@@ -66,6 +66,10 @@ const LinkedinCalendar = () => {
             events={events}
             startAccessor="start"
             endAccessor="end"
+            messages={{
+              event: 'Post',
+              agenda: 'Posts'
+            }}
           />
         </Card.Body>
       </Card>
