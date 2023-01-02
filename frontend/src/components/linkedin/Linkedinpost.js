@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Dropdown, Modal, Row } from "react-bootstrap";
-import { useSearchParams } from "react-router-dom";
+import {  useNavigate,useSearchParams } from "react-router-dom";
 import '../sidebar.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,6 +14,7 @@ console.log(userEmail)
 const Linkedinpost = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const code = searchParams.get("code")
+  const navigate = useNavigate();
  
   const axiosPrivate = useAxiosPrivate();
 
@@ -73,6 +74,7 @@ const Linkedinpost = () => {
 
       setDescription('');
       handleClose();
+      navigate('/linkedinpost', { replace: true });
     } catch (error) {
       if (!error.response) {
         alert('No server response');
