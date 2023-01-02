@@ -74,7 +74,7 @@ const Linkedinpost = () => {
 
       setDescription('');
       handleClose();
-      navigate('/linkedinpost', { replace: true });
+      navigate('/linkedincalendar', { replace: true });
     } catch (error) {
       if (!error.response) {
         alert('No server response');
