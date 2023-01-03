@@ -14,4 +14,7 @@ router.route('/interests/:email')
 router.route('/update/:email')
     .put(verifyRoles(ROLES_LIST.User), usersController.updateUser);
 
+router.route('/requestPremium')
+    .post(verifyRoles(ROLES_LIST.User), usersController.handlePremiumRequest);
+
 module.exports = router;

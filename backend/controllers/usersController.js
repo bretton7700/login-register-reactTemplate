@@ -1,4 +1,5 @@
 const User = require('../model/User');
+const Premium = require('../model/Premium');
 
 const getAllUsers = async (req, res) => {
     const users = await User.find();
@@ -40,11 +41,31 @@ const getUserInterests = async (req, res) => {
     const result = await user.save();
     res.json(result)
 }
-  
+
+const handlePremiumRequest = async (req, res) => {
+
+    if (!req?.body?.suitName || !req?.body?.requesterEmail ) {
+        return res.status(400).json({ 'message': 'all details not added' })
+    }
+
+    try {
+        const result = await Premium.create({
+            "suitName": req.body.suitName,
+            "requesterEmail": req.body.requesterEmail,
+            
+        });
+        console.log(result);
+        res.status(201).json({ 'success': `New premium   request made by  ${req.body.requesterEmail} ` });
+    } catch (err) {
+        console.error(err);
+
+    }
+}
 
 module.exports = {
     getAllUsers,
     deleteUser,
     getUserInterests,
-    updateUser
+    updateUser,
+    handlePremiumRequest
 }

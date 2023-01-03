@@ -14,7 +14,7 @@ const handleLogin = async (req, res) => {
     if (match) {
         const roles = Object.values(foundUser.roles).filter(Boolean);
         const email = foundUser.email;
-        const company = foundUser.company;
+        const company = foundUser.companyname;
         // create JWTs
         const accessToken = jwt.sign(
             {
