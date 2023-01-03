@@ -39,17 +39,7 @@ const TuskeechatStarter = ({ user_Email  }) => {
                     console.log(order.status);
                    
                     UpdateTuskeechatPayment();
-                    //!BGN 5/20/2022 Purchase Event
-                    setTimeout(function(){
-                        import('react-facebook-pixel')
-                        .then((x) => x.default)
-                        .then((ReactPixel) => {
-                            ReactPixel.init('360261592349789')
-                            ReactPixel.track('Purchase')
-
-                        })
-
-                    },500)
+                    
                     setTimeout(function(){
                         window.location.replace("https://tuskeechat.ndovucloud.com/app/auth/signup")
 
