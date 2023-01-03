@@ -67,7 +67,7 @@ const Dashboard = () => {
 
     const updateUser = async (e) => {
         e.preventDefault();
-        const UserResponse = await axiosPrivate.post(`${UPDATE_URL}/${email}`,
+        const UserResponse = await axiosPrivate.put(`${UPDATE_URL}/${email}`,
             JSON.stringify({
               interests: `the user wants ${checkbox4},${checkbox2},${checkbox3},${checkbox5} and he also added ${textDetail} `,
             }), {
