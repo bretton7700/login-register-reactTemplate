@@ -1,6 +1,6 @@
 import { Alert, AlertTitle } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import {
     Button,
     Card,
