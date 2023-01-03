@@ -89,5 +89,6 @@ module.exports = {
     deleteUser,
     getUserInterests,
     updateUser,
-    handlePremiumRequest
+    handlePremiumRequest,
+    handlePurchases
 }
