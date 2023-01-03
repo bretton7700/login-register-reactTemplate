@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-
 import axios from '../api/axios';
-// import Ndovucloud from './images/Ndovucloud.png';
+
 
 const LOGIN_URL = '/auth';
 
 const Login = () => {
-    const { setAuth, persist, setPersist } = useAuth();
+    const { setAuth } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -43,6 +42,10 @@ const Login = () => {
             const logged_Email =response.data.email;
             console.log(logged_Email)
             localStorage.setItem('userEmail', logged_Email);
+
+            const logged_company = response.data.companyname;
+            console.log(logged_company)
+            localStorage.setItem('company', logged_company);
             // console.log(JSON.stringify(response));
            
             const accessToken = response?.data?.accessToken;
