@@ -40,13 +40,13 @@ const Dashboard = () => {
                 const response = await axiosPrivate.get(`/users/interests/${email}`, {
                     signal: controller.signal
                 });
-                if (response.length === 0) {
+                if (response.data.interests === "none") {
                     setShow(true); // show the modal
                     
                 } else {
                     setShow(false); // don't show the modal
-                    // setShowing(true);
-                    alert(response.data)
+                    
+                    
                 }
 
 
