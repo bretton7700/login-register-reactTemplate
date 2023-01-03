@@ -89,9 +89,9 @@ const Linkedinpost = () => {
     event.preventDefault();
     const descriptionWords = description.split(' ');
     //Linkedin doesn't take more than 700 words
-    descriptionWords.length > 700 ? alert('The description cannot exceed 700 words') : null;
+    void (descriptionWords.length > 700 ? alert('The description cannot exceed 700 words') : null);
+    void (description.length === 0 ? alert('please fill in the details') : null);
 
-    description.length === 0 ? alert('please fill in the details') : null;
     try {
       await axiosPrivate.get("/linkedin/callback", {
         params: {
