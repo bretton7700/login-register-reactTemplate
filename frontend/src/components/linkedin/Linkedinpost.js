@@ -87,12 +87,11 @@ const Linkedinpost = () => {
 
   const SendPost = async (event) => {
     event.preventDefault();
-
-    if (description.length === 0) {
-      alert('Please fill in the details');
-      return;
-    }
-
+    const descriptionWords = description.split(' ');
+    //Linkedin doesn't take more than 700 words
+    descriptionWords.length > 700 ? alert('The description cannot exceed 700 words') : null;
+       
+    description.length === 0 ? alert('please fill in the details') : null;
     try {
       await axiosPrivate.get("/linkedin/callback", {
         params: {
@@ -195,7 +194,7 @@ const Linkedinpost = () => {
 
                 <Form.Group className="mb-3">
                   <Form.Label>Text</Form.Label>
-                  <Form.Control type="text" placeholder="Enter Your Description" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
+                  <Form.Control type="text" rows="15" placeholder="Enter Your Description" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
                   <Form.Control.Feedback type="invalid">description  required</Form.Control.Feedback>
                 </Form.Group>
               </Col>
