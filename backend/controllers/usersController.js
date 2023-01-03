@@ -1,5 +1,6 @@
 const User = require('../model/User');
 const Premium = require('../model/Premium');
+const Purchase = require('../model/Purchases');
 
 const getAllUsers = async (req, res) => {
     const users = await User.find();
@@ -56,6 +57,27 @@ const handlePremiumRequest = async (req, res) => {
         });
         console.log(result);
         res.status(201).json({ 'success': `New premium   request made by  ${req.body.requesterEmail} ` });
+    } catch (err) {
+        console.error(err);
+
+    }
+}
+
+const handlePurchases = async (req, res) => {
+
+    if (!req?.body?.paymentAmount || !req?.body?.buyer || !req?.body?.suitName ) {
+        return res.status(400).json({ 'message': 'all details not added' })
+    }
+
+    try {
+        const result = await Purchase.create({
+            "paymentAmount": req.body.paymentAmount,
+            "suitName": req.body.suitName,
+            "buyer": req.body.buyer
+            
+        });
+        console.log(result);
+        res.status(201).json({ 'success': `New payment details  added  by  ${req.body.buyer} ` });
     } catch (err) {
         console.error(err);
 
