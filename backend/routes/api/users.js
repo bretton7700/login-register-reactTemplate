@@ -9,6 +9,6 @@ router.route('/')
     .delete(verifyRoles(ROLES_LIST.Admin), usersController.deleteUser);
 
 router.route('/interests/:email')
-    .get(verifyRoles(ROLES_LIST.Admin), usersController.getUserInterests);
+    .get(verifyRoles(ROLES_LIST.User), usersController.getUserInterests);
 
 module.exports = router;
