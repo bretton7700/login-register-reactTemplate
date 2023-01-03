@@ -1,9 +1,6 @@
 import React from "react";
-
-
 class TuskeechatWidget extends React.Component {
-    
-  
+     
     componentDidMount() {
       // Add Chatwoot Settings
     window.chatwootSettings = {

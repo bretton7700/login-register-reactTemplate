@@ -2,9 +2,7 @@ import Axios from 'axios';
 import React, { useEffect, useRef } from 'react';
 
 const TuskeechatStarter = ({ user_Email  }) => {
- 
-
- //BGN 5/2/2022 UPDATE chatwoot database for payments
+  //BGN 5/2/2022 UPDATE chatwoot database for payments
     const UpdateTuskeechatPayment = () => {
         Axios.post("https://backend.droplets.ndovucloud.com/api/insertTuskeechatPayment", {
             Buyer_Email: `${user_Email}`,

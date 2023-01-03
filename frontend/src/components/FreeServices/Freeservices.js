@@ -3,7 +3,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Free from '../images/Free.jpg';
-import './WorkspaceList.css';
+import '../WorkspaceList.css';
 ///
 const Freeservices = () => {
 
