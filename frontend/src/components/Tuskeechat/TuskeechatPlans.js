@@ -31,6 +31,7 @@ const TuskeechatPlans = () => {
           console.log(JSON.stringify(postResponse?.data));
 
           setShowing(true);
+          setTimeout(setShowing(false), 2000);
     
         
         } catch (error) {
