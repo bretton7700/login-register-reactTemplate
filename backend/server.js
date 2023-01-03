@@ -69,8 +69,7 @@ app.use('/linkedin',require('./routes/api/linkedin'));
 // Set up the cron job to run every minute
 const job = new cron.CronJob('* * * * *', sendPosts.sendPosts);
 job.start();
-
-
+app.use('/users',require('./routes/api/users'));
 //app.use('/parcels',require('./routes/api/parcel'));
 
 app.all('*', (req, res) => {
