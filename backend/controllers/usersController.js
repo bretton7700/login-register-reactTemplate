@@ -23,6 +23,9 @@ const getUserInterests = async (req, res) => {
       return res.status(204).json({ 'message': `User with email ${req.params.email} not found` });
     }
     res.json(user);
+
+    console.log('.....the user...')
+    console.log(user)
   }
   
 
