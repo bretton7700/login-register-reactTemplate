@@ -75,6 +75,8 @@ const Dashboard = () => {
             withCredentials: true
           });
 
+          setShow(false);
+
           setShowing(true)
 
     } 
