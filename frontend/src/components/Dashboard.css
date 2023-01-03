@@ -65,7 +65,7 @@
 }
 .btn-success{
     color: white;
-    background-color:#343EAB !important;
+    /* background-color:#343EAB !important; */
     border-radius: 14px;
     padding: 0.25rem 0.5rem;
     
@@ -73,7 +73,7 @@
 
 .Plan button{
     color: white;
-    background-color: #343EAB !important;
+    /* background-color: #343EAB !important; */
     border-radius: 14px;
     padding: 0.25rem 0.5rem;
   

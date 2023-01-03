@@ -2,16 +2,36 @@ import Axios from 'axios';
 import React, { useEffect, useRef } from 'react';
 
 const TuskeechatPro = ({ user_Email  }) => {
-  //BGN 5/2/2022 UPDATE chatwoot database for payments
-    const UpdateTuskeechatPayment = () => {
-        Axios.post("https://backend.droplets.ndovucloud.com/api/insertTuskeechatPayment", {
-            Buyer_Email: `${user_Email}`,
-            
+  
 
-        });
-
-
-    };
+    const UpdateTuskeechatPayment = async () => {
+       
+        try {
+          
+          // Make a post request and wait for it to resolve
+          const postResponse = await axiosPrivate.post(STARTER_URL,
+            JSON.stringify({
+                suitName: 'Tuskeechat Pro',
+                buyer: `${user_Email}`,
+                paymentAmount: '69.99',
+             
+            }), {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true
+          });
+    
+          // TODO: remove console.logs before deployment
+          console.log(JSON.stringify(postResponse?.data));
+    
+        
+        } catch (error) {
+          if (!error.response) {
+            alert('No server response');
+          } else {
+            alert('request failed');
+          }
+        }
+      };
 
 
     const paypal = useRef();

@@ -3,16 +3,40 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import TuskeechatPro from './TuskeechatPro';
 import TuskeechatStarter from './TuskeechatStarter';
 import "../Dashboard.css";
-
+const PREMIUM_URL = '/users/requestPremium';
 const TuskeechatPlans = () => {
 
     const user_Email = localStorage.getItem('userEmail');
-    const requestCustomTuskeeFunction = () => {
-        Axios.post("https://backend.droplets.ndovucloud.com/api/requestCustomTuskeechat", {
-            requester_email: user_Email
-
-        });
-    };
+    const requestCustomTuskeechat = async () => {
+       
+        try {
+          
+    
+          // Make a post request and wait for it to resolve
+          const postResponse = await axiosPrivate.post(PREMIUM_URL,
+            JSON.stringify({
+                suitName: 'Tuskeechat',
+                requesterEmail: user_Email
+             
+            }), {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true
+          });
+    
+          // TODO: remove console.logs before deployment
+          console.log(JSON.stringify(postResponse?.data));
+    
+        
+        } catch (error) {
+          if (!error.response) {
+            alert('No server response');
+          } else {
+            alert('request failed');
+          }
+        }
+      };
+    
+   
     return (
         <div >
 
@@ -155,7 +179,7 @@ const TuskeechatPlans = () => {
                                         <br />
                                         <span>24/5 Phone Support</span>
                                         <br />
-                                        <Button className='mr-2' variant="warning" size='sm' onClick={requestCustomTuskeeFunction}>Contact Sales</Button>
+                                        <Button className='mr-2' variant="warning" size='sm' onClick={requestCustomTuskeechat}>Contact Sales</Button>
 
                                     </div>
 
