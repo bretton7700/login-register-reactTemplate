@@ -49,8 +49,7 @@ const Dashboard = () => {
 
 
 
-                // update the events state variable
-                isMounted
+               
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
