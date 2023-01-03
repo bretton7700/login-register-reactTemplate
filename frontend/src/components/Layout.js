@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Footer from './Footer';
+import TuskeechatWidget from "./Tuskeechat/TuskeechatWidget";
 import Sidebar from './Sidebar';
 // import Navbar from "./Navbar";
 import { Header } from "./Header";
@@ -17,6 +18,7 @@ const Layout = () => {
 
             <Outlet />
             </main>
+            <TuskeechatWidget />
             <Footer />
             </div>
             </div>

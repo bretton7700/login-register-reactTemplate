@@ -15,6 +15,7 @@ import LinkedinCalendar from './components/linkedin/LinkedinCalendar';
 import Freeservices from './components/FreeServices/Freeservices';
 import Blogwritter from './components/FreeServices/Blogwritter';
 import ImageGenerator from './components/FreeServices/ImageGenerator';
+import NdovuTuskeechat from './components/Tuskeechat/NdovuTuskeechat';
 
 const ROLES = {
   'User': 2001,
@@ -72,6 +73,10 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/ai-images" element={<ImageGenerator />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/omnichannel" element={<NdovuTuskeechat />} />
             </Route>
 
 
