@@ -37,7 +37,7 @@ const getUserInterests = async (req, res) => {
     if(req.body?.interests) user.interests = req.body.interests;
     
 
-    const result = await User.save();
+    const result = await user.save();
     res.json(result)
 }
   
