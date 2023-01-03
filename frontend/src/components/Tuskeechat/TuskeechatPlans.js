@@ -6,6 +6,7 @@ import "../Dashboard.css";
 const PREMIUM_URL = '/users/requestPremium';
 const TuskeechatPlans = () => {
     const axiosPrivate = useAxiosPrivate();
+    const [showing, setShowing] = useState(false);
 
     const user_Email = localStorage.getItem('userEmail');
     const requestCustomTuskeechat = async () => {
@@ -26,6 +27,8 @@ const TuskeechatPlans = () => {
     
           // TODO: remove console.logs before deployment
           console.log(JSON.stringify(postResponse?.data));
+
+          setShowing(true);
     
         
         } catch (error) {
@@ -40,6 +43,22 @@ const TuskeechatPlans = () => {
    
     return (
         <div >
+             <div>
+        <Modal show={showing} >
+          <Modal.Body>
+
+            <div className="accordion-item" id="accordionFlushExample">
+
+              <div className="accordion-body">
+                <Card.Title>  successfully Sent Request</Card.Title>
+
+              </div>
+
+            </div>
+
+          </Modal.Body>
+        </Modal>
+      </div>
 
             <div>
                 <Container>

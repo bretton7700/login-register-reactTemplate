@@ -68,10 +68,10 @@
     background: #343EAB;  
   
   }
-  .btn-primary {
+  /* .btn-primary {
     background-color: #682f68 ;
     border-color: #682f68 ;
-  }    
+  }     */
   .btn-primary:hover {
     background-color: #682f68 !important;
     border-color: #682f68 !important;

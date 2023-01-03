@@ -279,10 +279,10 @@ li {
     z-index: 999;
   }
   
-  .btn-primary {
+  /* .btn-primary {
     background-color: #682f68 ;
     border-color: #682f68 ;
-  }
+  } */
   
   .btn-primary:hover {
     background-color: #682f68 !important;
