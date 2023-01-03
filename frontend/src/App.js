@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
+import Dashboard from './components/Dashboard';
 import Layout from './components/Layout';
 import Login from './components/Login';
 import Missing from './components/Missing';
@@ -46,7 +46,7 @@ function App() {
           <Route element={<PersistLogin />}>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Dashboard />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
