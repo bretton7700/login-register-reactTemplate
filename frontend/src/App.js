@@ -16,6 +16,7 @@ import Freeservices from './components/FreeServices/Freeservices';
 import Blogwritter from './components/FreeServices/Blogwritter';
 import ImageGenerator from './components/FreeServices/ImageGenerator';
 import NdovuTuskeechat from './components/Tuskeechat/NdovuTuskeechat';
+import TuskeechatPlans from './components/Tuskeechat/TuskeechatPlans';
 
 const ROLES = {
   'User': 2001,
@@ -77,6 +78,10 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/omnichannel" element={<NdovuTuskeechat />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/payTuskeechat" element={<TuskeechatPlans />} />
             </Route>
 
 
