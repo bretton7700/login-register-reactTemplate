@@ -60,6 +60,11 @@ export const SidebarData = [
                 path: "/ai-blog-writter",
                 icon: <Create />,
             },
+            {
+                title: "AI Images",
+                path: "/ai-images",
+                icon: <Create />,
+            },
             
             
             

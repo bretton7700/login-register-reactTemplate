@@ -12,6 +12,9 @@ import Publishing from './components/Publishing';
 import Linkedinauthenticate from './components/linkedin/Linkedinauthenticate';
 import Linkedinpost from './components/linkedin/Linkedinpost';
 import LinkedinCalendar from './components/linkedin/LinkedinCalendar';
+import Freeservices from './components/FreeServices/Freeservices';
+import Blogwritter from './components/FreeServices/Blogwritter';
+import ImageGenerator from './components/FreeServices/ImageGenerator';
 
 const ROLES = {
   'User': 2001,
@@ -58,6 +61,19 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/linkedincalendar" element={<LinkedinCalendar />} />
             </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/free-services" element={<Freeservices />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/ai-blog-writter" element={<Blogwritter />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/ai-images" element={<ImageGenerator />} />
+            </Route>
+
 
 
 

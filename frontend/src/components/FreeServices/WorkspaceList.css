@@ -1,0 +1,36 @@
+.workspaceList {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.mr-2 {
+    margin-right: 5px !important;
+}
+
+
+button.theButton {
+    margin-bottom: 10px !important;
+}
+
+@media only screen and (max-width:600px) {
+    #videos_Card{
+        display: block !important;
+        float: left !important;
+    }
+   
+}
+
+
+
+@media only screen and (max-width:600px) {
+    #Tips_Card{
+        display: block !important;
+        float: left !important;
+        width: 300px !important;
+    }
+   
+}
+
+div#Tips_Card {
+    width: 300px !important;
+}
