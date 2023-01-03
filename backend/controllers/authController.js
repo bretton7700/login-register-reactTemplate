@@ -14,6 +14,7 @@ const handleLogin = async (req, res) => {
     if (match) {
         const roles = Object.values(foundUser.roles).filter(Boolean);
         const email = foundUser.email;
+        const company = foundUser.company;
         // create JWTs
         const accessToken = jwt.sign(
             {
@@ -36,12 +37,13 @@ const handleLogin = async (req, res) => {
         const result = await foundUser.save();
         console.log(result);
         console.log(roles);
+        console.log(company)
 
         // Creates Secure Cookie with refresh token
         res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
         
         // Send authorization roles and access token to user
-        res.json({ email,roles, accessToken });
+        res.json({ email,company,roles, accessToken });
 
     } else {
         res.sendStatus(401);
