@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Dropdown, Modal, Row } from "react-bootstrap";
-import {  useNavigate,useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import '../sidebar.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,7 +15,7 @@ const Linkedinpost = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const code = searchParams.get("code")
   const navigate = useNavigate();
- 
+
   const axiosPrivate = useAxiosPrivate();
 
   const [showing, setShowing] = useState(false);
@@ -90,7 +90,7 @@ const Linkedinpost = () => {
     const descriptionWords = description.split(' ');
     //Linkedin doesn't take more than 700 words
     descriptionWords.length > 700 ? alert('The description cannot exceed 700 words') : null;
-       
+
     description.length === 0 ? alert('please fill in the details') : null;
     try {
       await axiosPrivate.get("/linkedin/callback", {
@@ -156,7 +156,7 @@ const Linkedinpost = () => {
                 <div className="accordion-body">
                   <Card.Title>Select A Date and Time</Card.Title>
                   <Form>
-                    <Form.Group>
+                    <Form.Group style={{ paddingBottom: '2em' }}>
                       <DatePicker
                         selected={postDate}
                         onChange={date => setPostDate(date)}
@@ -166,13 +166,12 @@ const Linkedinpost = () => {
                         dateFormat="MMMM d, yyyy h:mm aa"
                         timeCaption="time"
                       />
-                     
                     </Form.Group>
                     <Form.Group>
                       <Button variant="danger" size="sm" onClick={handleSchedule}>Schedule</Button>{" "}
-
                     </Form.Group>
                   </Form>
+
                 </div>
               </div>
             </div>
