@@ -191,11 +191,7 @@ const Linkedinpost = () => {
 
               <Col sm={6}>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Text</Form.Label>
-                  <Form.Control type="text" style={{height: '300px', width: '300px'}} placeholder="Enter Your Description" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
-                  <Form.Control.Feedback type="invalid">description  required</Form.Control.Feedback>
-                </Form.Group>
+              <textarea rows="15" wrap="soft" placeholder="Enter Your text" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
               </Col>
             </Row>
             <Dropdown>
