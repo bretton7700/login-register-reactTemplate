@@ -27,10 +27,24 @@ const getUserInterests = async (req, res) => {
     console.log('.....the user...')
     console.log(user)
   }
+
+  const  updateUser = async (req,res) =>{
+    if (!req?.params?.email) return res.status(400).json({ "message": 'Email required' });
+    const user = await User.findOne({ email: req.params.email }).exec();
+    if(!user){
+        res.status(204).json({ 'message': `No user matches ID ${req.params.id}`})
+    }
+    if(req.body?.interests) user.interests = req.body.interests;
+    
+
+    const result = await User.save();
+    res.json(result)
+}
   
 
 module.exports = {
     getAllUsers,
     deleteUser,
-    getUserInterests
+    getUserInterests,
+    updateUser
 }

@@ -36,6 +36,7 @@ const userSchema = new Schema({
     },
     interests: {
         type: String,
+        default: 'none'
          },
     countryCode: {
         type: String,

@@ -11,4 +11,7 @@ router.route('/')
 router.route('/interests/:email')
     .get(verifyRoles(ROLES_LIST.User), usersController.getUserInterests);
 
+router.route('/update/:email')
+    .put(verifyRoles(ROLES_LIST.User), usersController.getUserInterests);
+
 module.exports = router;
