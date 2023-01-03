@@ -14,7 +14,7 @@ import "react-phone-number-input/style.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import Showaround from "../components/images/Showaround.png";
-
+const UPDATE_URL = '/users/update';
 const Dashboard = () => {
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
@@ -64,6 +64,20 @@ const Dashboard = () => {
             controller.abort();
         };
     }, []);
+
+    const updateUser = async (e) => {
+        e.preventDefault();
+        const UserResponse = await axiosPrivate.post(`${UPDATE_URL}/${email}`,
+            JSON.stringify({
+              interests: `the user wants ${checkbox4},${checkbox2},${checkbox3},${checkbox5} and he also added ${textDetail} `,
+            }), {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true
+          });
+
+          setShowing(true)
+
+    } 
 
 
 
@@ -134,7 +148,7 @@ const Dashboard = () => {
                     <Modal.Title>We need extra details</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form >
+                    <Form onSubmit={updateUser}>
                         <Row>
                             <Col sm={6}>
                                 <Form.Group className="mb-3">
