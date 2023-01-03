@@ -1,10 +1,11 @@
-import Axios from 'axios';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import TuskeechatPro from './TuskeechatPro';
 import TuskeechatStarter from './TuskeechatStarter';
 import "../Dashboard.css";
 const PREMIUM_URL = '/users/requestPremium';
 const TuskeechatPlans = () => {
+    const axiosPrivate = useAxiosPrivate();
 
     const user_Email = localStorage.getItem('userEmail');
     const requestCustomTuskeechat = async () => {

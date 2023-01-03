@@ -1,7 +1,8 @@
-import Axios from 'axios';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import React, { useEffect, useRef } from 'react';
-
+const STARTER_URL = '/users/purchases';
 const TuskeechatPro = ({ user_Email  }) => {
+    const axiosPrivate = useAxiosPrivate();
   
 
     const UpdateTuskeechatPayment = async () => {
