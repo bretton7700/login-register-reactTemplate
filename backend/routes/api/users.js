@@ -12,6 +12,6 @@ router.route('/interests/:email')
     .get(verifyRoles(ROLES_LIST.User), usersController.getUserInterests);
 
 router.route('/update/:email')
-    .put(verifyRoles(ROLES_LIST.User), usersController.getUserInterests);
+    .put(verifyRoles(ROLES_LIST.User), usersController.updateUser);
 
 module.exports = router;
