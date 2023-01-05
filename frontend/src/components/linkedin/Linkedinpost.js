@@ -198,12 +198,16 @@ const Linkedinpost = () => {
                 <textarea rows="15" wrap="soft" placeholder="Enter Your text" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
               </Col>
               <Col md={6}>
-                <input type="file" multiple onChange={handleImageSelection} />
-                {/* display selected images */}
-                {Object.values(images).map((image) => (
-                  <img src={URL.createObjectURL(image)} alt="Selected Images" />
-                ))}
-              </Col>
+        <input type="file" multiple onChange={handleImageSelection} />
+        {/* display selected images */}
+        {Object.values(images).map((image) => (
+          <img
+            src={URL.createObjectURL(image)}
+            alt="Selected Images"
+            style={{ height: '100px', width: '100px' }}
+          />
+        ))}
+      </Col>
             </Row>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
