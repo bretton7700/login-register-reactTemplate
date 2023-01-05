@@ -152,49 +152,53 @@ const Linkedinpost = () => {
     // LinkedIn doesn't take more than 700 words
     void (descriptionWords.length > 700 ? alert('The description cannot exceed 700 words') : null);
     void (description.length === 0 ? alert('please fill in the details') : null);
-
+  
+    // separate the images and videos in the images array
+    const imageURLs = images.filter((image) => image.file.type.startsWith('image/')).map((image) => image.dataURL);
+    const videoURLs = images.filter((image) => image.file.type === 'video/mp4').map((image) => image.dataURL);
+  
     // include the videos or images in the request body, depending on what the user has selected
     let requestBody;
-    if (videos.length > 0 && images.length > 0) {
+    if (videoURLs.length > 0 && imageURLs.length > 0) {
         requestBody = {
             description: description,
-            videos: videos, // array of video URLs
-            images: images // array of image URLs
+            videos: videoURLs, // array of video URLs
+            images: imageURLs // array of image URLs
         };
-    } else if (videos.length > 0) {
+    } else if (videoURLs.length > 0) {
         requestBody = {
             description: description,
-            videos: videos // array of video URLs
+            videos: videoURLs // array of video URLs
         };
-    } else if (images.length > 0) {
+    } else if (imageURLs.length > 0) {
         requestBody = {
             description: description,
-            images: images // array of image URLs
+            images: imageURLs // array of image URLs
         };
     } else {
         requestBody = {
             description: description
         };
     }
-
+  
     try {
       await axiosPrivate.get("/linkedin/callback", {
         params: {
           code: code,
         },
       });
-
+  
       // Wait for the get request to resolve
       const response = await axiosPrivate.get("/linkedin/userID");
       // Set the userID variable using the response data
-
+  
       // Wait for the post request to resolve
       const postResponse = await axiosPrivate.post(PUBLISH_URL,
         JSON.stringify(requestBody), {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });
-
+  
       console.log(JSON.stringify(response?.data));
       setDescription('');
       handleShowing();
@@ -203,7 +207,7 @@ const Linkedinpost = () => {
       console.error(error);
     }
   };
-
+  
 
 
 
