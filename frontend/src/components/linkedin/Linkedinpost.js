@@ -39,11 +39,68 @@ const Linkedinpost = () => {
 
   const [description, setDescription] = useState('')
   const [postDate, setPostDate] = useState(null); // date and time for new post
-  // handle image selection
-  const handleImageSelection = (event) => {
-    setImages(event.target.files);
-  }
 
+  const handleImageSelection = (event) => {
+    const files = event.target.files;
+
+    // validate file size
+    const maxFileSize = 200 * 1024 * 1024; // 200 MB
+    const invalidFileSize = Array.from(files).some((file) => file.size > maxFileSize);
+    if (invalidFileSize) {
+      alert('One or more of the selected files exceeds the maximum file size of 200 MB');
+      return;
+    }
+
+    // validate file type
+    const invalidFileType = Array.from(files).some((file) => !file.type.startsWith('image/') && file.type !== 'video/mp4');
+    if (invalidFileType) {
+      alert('One or more of the selected files is not an image or video file');
+      return;
+    }
+
+    // create thumbnails for images and videos
+    const thumbnails = Array.from(files).map((file) => {
+      return new Promise((resolve, reject) => {
+        if (file.type.startsWith('image/')) {
+          // create thumbnail for image
+          const reader = new FileReader();
+          reader.onload = () => {
+            const image = new Image();
+            image.onload = () => {
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              canvas.width = 100;
+              canvas.height = 100;
+              ctx.drawImage(image, 0, 0, 100, 100);
+              resolve(canvas.toDataURL());
+            };
+            image.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        } else if (file.type === 'video/mp4') {
+          // create thumbnail for video
+          const video = document.createElement('video');
+          video.onloadeddata = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 100;
+            canvas.height = 100;
+            ctx.drawImage(video, 0, 0, 100, 100);
+            resolve(canvas.toDataURL());
+          };
+          video.src = URL.createObjectURL(file);
+        } else {
+          reject(new Error('Invalid file type'));
+        }
+      });
+    });
+
+    Promise.all(thumbnails).then((dataURLs) => {
+      setImages(dataURLs.reduce((acc, dataURL, i) => {
+        return { ...acc, [files[i].name]: dataURL };
+      }, {}));
+    });
+  }
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -92,9 +149,33 @@ const Linkedinpost = () => {
   const SendPost = async (event) => {
     event.preventDefault();
     const descriptionWords = description.split(' ');
-    //Linkedin doesn't take more than 700 words
+    // LinkedIn doesn't take more than 700 words
     void (descriptionWords.length > 700 ? alert('The description cannot exceed 700 words') : null);
     void (description.length === 0 ? alert('please fill in the details') : null);
+
+    // include the videos or images in the request body, depending on what the user has selected
+    let requestBody;
+    if (videos.length > 0 && images.length > 0) {
+        requestBody = {
+            description: description,
+            videos: videos, // array of video URLs
+            images: images // array of image URLs
+        };
+    } else if (videos.length > 0) {
+        requestBody = {
+            description: description,
+            videos: videos // array of video URLs
+        };
+    } else if (images.length > 0) {
+        requestBody = {
+            description: description,
+            images: images // array of image URLs
+        };
+    } else {
+        requestBody = {
+            description: description
+        };
+    }
 
     try {
       await axiosPrivate.get("/linkedin/callback", {
@@ -109,9 +190,7 @@ const Linkedinpost = () => {
 
       // Wait for the post request to resolve
       const postResponse = await axiosPrivate.post(PUBLISH_URL,
-        JSON.stringify({
-          description: description,
-        }), {
+        JSON.stringify(requestBody), {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });
@@ -124,6 +203,7 @@ const Linkedinpost = () => {
       console.error(error);
     }
   };
+
 
 
 
@@ -198,16 +278,16 @@ const Linkedinpost = () => {
                 <textarea rows="15" wrap="soft" placeholder="Enter Your text" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
               </Col>
               <Col md={6}>
-        <input type="file" multiple onChange={handleImageSelection} />
-        {/* display selected images */}
-        {Object.values(images).map((image) => (
-          <img
-            src={URL.createObjectURL(image)}
-            alt="Selected Images"
-            style={{ height: '100px', width: '100px' }}
-          />
-        ))}
-      </Col>
+                <input type="file" multiple onChange={handleImageSelection} />
+                {/* display selected images */}
+                {Object.values(images).map((image) => (
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="Selected Images"
+                    style={{ height: '100px', width: '100px' }}
+                  />
+                ))}
+              </Col>
             </Row>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
