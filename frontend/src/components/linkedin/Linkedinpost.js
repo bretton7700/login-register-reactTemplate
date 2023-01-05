@@ -35,10 +35,14 @@ const Linkedinpost = () => {
   }
 
   const handleClose = () => setShow(false);
+  const [images, setImages] = useState([]); // state to store selected images
 
   const [description, setDescription] = useState('')
   const [postDate, setPostDate] = useState(null); // date and time for new post
-
+  // handle image selection
+  const handleImageSelection = (event) => {
+    setImages(event.target.files);
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -191,7 +195,14 @@ const Linkedinpost = () => {
 
               <Col sm={6}>
 
-              <textarea rows="15" wrap="soft" placeholder="Enter Your text" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
+                <textarea rows="15" wrap="soft" placeholder="Enter Your text" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
+              </Col>
+              <Col md={6}>
+                <input type="file" multiple onChange={handleImageSelection} />
+                {/* display selected images */}
+                {images.map((image) => (
+                  <img src={URL.createObjectURL(image)} alt="Selected Images" />
+                ))}
               </Col>
             </Row>
             <Dropdown>
