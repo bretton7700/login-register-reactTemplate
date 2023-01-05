@@ -40,6 +40,8 @@ const Linkedinpost = () => {
   const [description, setDescription] = useState('')
   const [postDate, setPostDate] = useState(null); // date and time for new post
 
+
+
   const handleImageSelection = (event) => {
     const files = event.target.files;
 
@@ -72,7 +74,7 @@ const Linkedinpost = () => {
               canvas.width = 100;
               canvas.height = 100;
               ctx.drawImage(image, 0, 0, 100, 100);
-              resolve(canvas.toDataURL());
+              resolve({ file, dataURL: canvas.toDataURL() });
             };
             image.src = reader.result;
           };
@@ -86,7 +88,7 @@ const Linkedinpost = () => {
             canvas.width = 100;
             canvas.height = 100;
             ctx.drawImage(video, 0, 0, 100, 100);
-            resolve(canvas.toDataURL());
+            resolve({ file, dataURL: canvas.toDataURL() });
           };
           video.src = URL.createObjectURL(file);
         } else {
@@ -95,12 +97,13 @@ const Linkedinpost = () => {
       });
     });
 
-    Promise.all(thumbnails).then((dataURLs) => {
-      setImages(dataURLs.reduce((acc, dataURL, i) => {
-        return { ...acc, [files[i].name]: dataURL };
-      }, {}));
+    Promise.all(thumbnails).then((results) => {
+      // store selected images and videos in the state
+      const images = results.filter((result) => result.file.type.startsWith('image/')).map((result) => result.dataURL);
+      const videos = results.filter((result) => result.file.type === 'video/mp4').map((result) => result.dataURL);
+      setImages({ images, videos });
     });
-  }
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -152,53 +155,53 @@ const Linkedinpost = () => {
     // LinkedIn doesn't take more than 700 words
     void (descriptionWords.length > 700 ? alert('The description cannot exceed 700 words') : null);
     void (description.length === 0 ? alert('please fill in the details') : null);
-  
+
     // separate the images and videos in the images array
     const imageURLs = images.filter((image) => image.file.type.startsWith('image/')).map((image) => image.dataURL);
     const videoURLs = images.filter((image) => image.file.type === 'video/mp4').map((image) => image.dataURL);
-  
+
     // include the videos or images in the request body, depending on what the user has selected
     let requestBody;
     if (videoURLs.length > 0 && imageURLs.length > 0) {
-        requestBody = {
-            description: description,
-            videos: videoURLs, // array of video URLs
-            images: imageURLs // array of image URLs
-        };
+      requestBody = {
+        description: description,
+        videos: videoURLs, // array of video URLs
+        images: imageURLs // array of image URLs
+      };
     } else if (videoURLs.length > 0) {
-        requestBody = {
-            description: description,
-            videos: videoURLs // array of video URLs
-        };
+      requestBody = {
+        description: description,
+        videos: videoURLs // array of video URLs
+      };
     } else if (imageURLs.length > 0) {
-        requestBody = {
-            description: description,
-            images: imageURLs // array of image URLs
-        };
+      requestBody = {
+        description: description,
+        images: imageURLs // array of image URLs
+      };
     } else {
-        requestBody = {
-            description: description
-        };
+      requestBody = {
+        description: description
+      };
     }
-  
+
     try {
       await axiosPrivate.get("/linkedin/callback", {
         params: {
           code: code,
         },
       });
-  
+
       // Wait for the get request to resolve
       const response = await axiosPrivate.get("/linkedin/userID");
       // Set the userID variable using the response data
-  
+
       // Wait for the post request to resolve
       const postResponse = await axiosPrivate.post(PUBLISH_URL,
         JSON.stringify(requestBody), {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });
-  
+
       console.log(JSON.stringify(response?.data));
       setDescription('');
       handleShowing();
@@ -207,7 +210,7 @@ const Linkedinpost = () => {
       console.error(error);
     }
   };
-  
+
 
 
 
@@ -284,14 +287,24 @@ const Linkedinpost = () => {
               <Col md={6}>
                 <input type="file" multiple onChange={handleImageSelection} />
                 {/* display selected images */}
-                {Object.values(images).map((image) => (
+                {images.images.map((image) => (
                   <img
-                    src={URL.createObjectURL(image)}
-                    alt="Selected Images"
+                    src={image}
+                    alt="Selected Image"
                     style={{ height: '100px', width: '100px' }}
                   />
                 ))}
+                {/* display selected videos */}
+                {images.videos.map((video) => (
+                  <video
+                    src={video}
+                    alt="Selected Video"
+                    style={{ height: '100px', width: '100px' }}
+                    controls
+                  />
+                ))}
               </Col>
+
             </Row>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
