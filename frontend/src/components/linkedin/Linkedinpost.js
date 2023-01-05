@@ -157,8 +157,9 @@ const Linkedinpost = () => {
     void (description.length === 0 ? alert('please fill in the details') : null);
 
     // separate the images and videos in the images array
-    const imageURLs = images.filter((image) => image.file.type.startsWith('image/')).map((image) => image.dataURL);
-    const videoURLs = images.filter((image) => image.file.type === 'video/mp4').map((image) => image.dataURL);
+    const imageURLs = Object.values(images).filter((image) => image.file.type.startsWith('image/')).map((image) => image.dataURL);
+
+    const videoURLs = Object.values(images).filter((image) => image.file.type === 'video/mp4').map((image) => image.dataURL);
 
     // include the videos or images in the request body, depending on what the user has selected
     let requestBody;
