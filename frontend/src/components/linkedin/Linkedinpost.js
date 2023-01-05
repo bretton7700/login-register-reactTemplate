@@ -35,7 +35,7 @@ const Linkedinpost = () => {
   }
 
   const handleClose = () => setShow(false);
-  const [images, setImages] = useState([]); // state to store selected images
+  const [images, setImages] = useState({}); // state to store selected images
 
   const [description, setDescription] = useState('')
   const [postDate, setPostDate] = useState(null); // date and time for new post
@@ -200,7 +200,7 @@ const Linkedinpost = () => {
               <Col md={6}>
                 <input type="file" multiple onChange={handleImageSelection} />
                 {/* display selected images */}
-                {images.map((image) => (
+                {Object.values(images).map((image) => (
                   <img src={URL.createObjectURL(image)} alt="Selected Images" />
                 ))}
               </Col>
