@@ -287,7 +287,7 @@ const Linkedinpost = () => {
               <Col md={6}>
                 <input type="file" multiple onChange={handleImageSelection} />
                 {/* display selected images */}
-                {images.images.map((image) => (
+                {images.images && images.images.map((image) => (
                   <img
                     src={image}
                     alt="Selected Image"
@@ -295,7 +295,7 @@ const Linkedinpost = () => {
                   />
                 ))}
                 {/* display selected videos */}
-                {images.videos.map((video) => (
+                {images.videos && images.videos.map((video) => (
                   <video
                     src={video}
                     alt="Selected Video"
@@ -304,6 +304,7 @@ const Linkedinpost = () => {
                   />
                 ))}
               </Col>
+
 
             </Row>
             <Dropdown>
