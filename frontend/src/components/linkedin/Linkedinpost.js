@@ -52,13 +52,34 @@ const Linkedinpost = () => {
       alert('One or more of the selected files exceeds the maximum file size of 200 MB');
       return;
     }
-
+  
     // validate file type
     const invalidFileType = Array.from(files).some((file) => !file.type.startsWith('image/') && file.type !== 'video/mp4');
     if (invalidFileType) {
       alert('One or more of the selected files is not an image or video file');
       return;
     }
+    const selectedImages = Array.from(event.target.files);
+    const imageObject = {};
+  
+    selectedImages.forEach((image) => {
+      const objectURL = URL.createObjectURL(image);
+      if (image.type.startsWith('image/')) {
+        if (!imageObject.images) {
+          imageObject.images = [objectURL];
+        } else {
+          imageObject.images.push(objectURL);
+        }
+      } else if (image.type.startsWith('video/')) {
+        if (!imageObject.videos) {
+          imageObject.videos = [objectURL];
+        } else {
+          imageObject.videos.push(objectURL);
+        }
+      }
+    });
+  
+    
 
     // create thumbnails for images and videos
     const thumbnails = Array.from(files).map((file) => {
@@ -103,6 +124,8 @@ const Linkedinpost = () => {
       const videos = results.filter((result) => result.file.type === 'video/mp4').map((result) => result.dataURL);
       setImages({ images, videos });
     });
+
+    setImages({ ...images, ...imageObject });
   };
   useEffect(() => {
     window.scrollTo(0, 0);
