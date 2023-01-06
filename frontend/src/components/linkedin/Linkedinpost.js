@@ -239,13 +239,15 @@ const Linkedinpost = () => {
   const removeImage = (imageUrl) => {
     const updatedImages = images.images.filter((image) => image !== imageUrl);
     setImages({ ...images, images: updatedImages });
+    fileInput.current.value = '';  // reset the value of the file input element
   };
-
+  
   const removeVideo = (videoUrl) => {
     const updatedVideos = images.videos.filter((video) => video !== videoUrl);
     setImages({ ...images, videos: updatedVideos });
+    fileInput.current.value = '';  // reset the value of the file input element
   };
-
+  
 
 
 
