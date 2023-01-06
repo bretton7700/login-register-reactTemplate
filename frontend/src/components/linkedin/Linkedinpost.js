@@ -179,11 +179,22 @@ const Linkedinpost = () => {
     // LinkedIn doesn't take more than 700 words
     void (descriptionWords.length > 700 ? alert('The description cannot exceed 700 words') : null);
     void (description.length === 0 ? alert('please fill in the details') : null);
-
-    // separate the images and videos in the images array
-    const imageURLs = Object.values(images).filter((image) => image.file.type.startsWith('image/')).map((image) => image.dataURL);
-
-    const videoURLs = Object.values(images).filter((image) => image.file.type === 'video/mp4').map((image) => image.dataURL);
+// separate the images and videos in the images array
+    console.log(images)
+    const imageURLs = Object.values(images).filter((image) => {
+      if (image && image.file) {
+        return image.file.type.startsWith('image/');
+      }
+      return false;
+    }).map((image) => image.dataURL);
+    
+    const videoURLs = Object.values(images).filter((image) => {
+      if (image && image.file) {
+        return image.file.type === 'video/mp4';
+      }
+      return false;
+    }).map((image) => image.dataURL);
+    
 
     // include the videos or images in the request body, depending on what the user has selected
     let requestBody;
