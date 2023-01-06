@@ -52,7 +52,7 @@ const Linkedinpost = () => {
       alert('One or more of the selected files exceeds the maximum file size of 200 MB');
       return;
     }
-  
+
     // validate file type
     const invalidFileType = Array.from(files).some((file) => !file.type.startsWith('image/') && file.type !== 'video/mp4');
     if (invalidFileType) {
@@ -61,7 +61,7 @@ const Linkedinpost = () => {
     }
     const selectedImages = Array.from(event.target.files);
     const imageObject = {};
-  
+
     selectedImages.forEach((image) => {
       const objectURL = URL.createObjectURL(image);
       if (image.type.startsWith('image/')) {
@@ -78,8 +78,8 @@ const Linkedinpost = () => {
         }
       }
     });
-  
-    
+
+
 
     // create thumbnails for images and videos
     const thumbnails = Array.from(files).map((file) => {
@@ -236,7 +236,15 @@ const Linkedinpost = () => {
   };
 
 
+  const removeImage = (imageUrl) => {
+    const updatedImages = images.images.filter((image) => image !== imageUrl);
+    setImages({ ...images, images: updatedImages });
+  };
 
+  const removeVideo = (videoUrl) => {
+    const updatedVideos = images.videos.filter((video) => video !== videoUrl);
+    setImages({ ...images, videos: updatedVideos });
+  };
 
 
 
@@ -311,22 +319,34 @@ const Linkedinpost = () => {
               <Col md={6}>
                 <input type="file" multiple onChange={handleImageSelection} />
                 {/* display selected images */}
-                {images.images && images.images.map((image) => (
-                  <img
-                    src={image}
-                    alt="Selected Image"
-                    style={{ height: '100px', width: '100px' }}
-                  />
-                ))}
+                {images.images &&
+                  images.images.map((image) => (
+                    <div>
+                      <img
+                        src={image}
+                        alt="Selected Image"
+                        style={{ height: '100px', width: '100px' }}
+                      />
+                      <button onClick={() => removeImage(image)}>
+                        &times;
+                      </button>
+                    </div>
+                  ))}
                 {/* display selected videos */}
-                {images.videos && images.videos.map((video) => (
-                  <video
-                    src={video}
-                    alt="Selected Video"
-                    style={{ height: '100px', width: '100px' }}
-                    controls
-                  />
-                ))}
+                {images.videos &&
+                  images.videos.map((video) => (
+                    <div>
+                      <video
+                        src={video}
+                        alt="Selected Video"
+                        style={{ height: '100px', width: '100px' }}
+                        controls
+                      />
+                      <button onClick={() => removeVideo(video)}>
+                        &times;
+                      </button>
+                    </div>
+                  ))}
               </Col>
 
 
