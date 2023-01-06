@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef  } from "react";
 import { Button, Card, Col, Form, Dropdown, Modal, Row } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import '../sidebar.css';
@@ -15,6 +15,7 @@ const Linkedinpost = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const code = searchParams.get("code")
   const navigate = useNavigate();
+  const fileInput = useRef(null);
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -319,7 +320,7 @@ const Linkedinpost = () => {
                 <textarea rows="15" wrap="soft" placeholder="Enter Your text" name="description" value={description} required onChange={(e) => { setDescription(e.target.value); }} />
               </Col>
               <Col md={6}>
-                <input type="file" multiple onChange={handleImageSelection} />
+                <input type="file" ref={fileInput}  multiple onChange={handleImageSelection} />
                 {/* display selected images */}
                 {images.images &&
                   images.images.map((image) => (
