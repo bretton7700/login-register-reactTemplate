@@ -35,13 +35,13 @@ router.route('/availableTrials/:suit/:status/:company')
 router.route('/createWorkspace')
     .post(verifyRoles(ROLES_LIST.User), usersController.handleWorkspaceCreation);
 
-router.route('/allCompanyWorkspaces')
+router.route('/allCompanyWorkspaces/:company/:product')
     .get(verifyRoles(ROLES_LIST.User), usersController.getAllCompanyWorkspaces);
 
 router.route('/DatabasePaymentStatus')
     .get(verifyRoles(ROLES_LIST.User), usersController.getDatabasePaymentStatus);
 
-router.route('/GetDatabases')
+router.route('/GetDatabases/:Users_Email')
     .get(verifyRoles(ROLES_LIST.User), usersController.getDatabases);
 
 router.route('/UpdateWorkspace')
