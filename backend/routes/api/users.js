@@ -19,4 +19,7 @@ router.route('/requestPremium')
 
 router.route('/purchases')
     .post(verifyRoles(ROLES_LIST.User), usersController.handlePurchases);
+    
+router.route('/unique')
+    .get(verifyRoles(ROLES_LIST.User), usersController.getUniqueDatabase);
 module.exports = router;

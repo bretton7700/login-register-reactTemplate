@@ -14,7 +14,19 @@ const databaseSchema = new Schema({
     adminEmail:{
         type: String,
         required: true
-    } 
+    },
+    uri:{
+        type: String,
+        required: true
+    },
+    port: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        default: 'unpaid'
+    }
 
 
 });
