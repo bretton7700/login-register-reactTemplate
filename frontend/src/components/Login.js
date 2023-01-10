@@ -43,8 +43,8 @@ const Login = () => {
             console.log(logged_Email)
             localStorage.setItem('userEmail', logged_Email);
 
-           
-            // console.log(JSON.stringify(response));
+           //ensure you remove this
+            console.log(JSON.stringify(response));
            
             const accessToken = response?.data?.accessToken;
             const roles = response?.data?.roles;

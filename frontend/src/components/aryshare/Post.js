@@ -77,6 +77,7 @@ const Post = () => {
     // Check if the image url is in correct format
     if (ImageUrl && !checkImageUrl(ImageUrl)) {
       alert("Please enter a valid image url");
+      setImageUrl('');
       return;
     } else {
       requestBody.imageUrl = ImageUrl;
