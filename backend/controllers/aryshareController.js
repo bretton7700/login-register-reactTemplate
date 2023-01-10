@@ -7,10 +7,11 @@ const run = async (req, res) => {
     const post = await social.post({
         post: req.body.description,
         platforms: req.body.selectedCheckboxes,
-        mediaUrls: [req.body.imageUrl]
+        mediaUrls: req.body.imageUrl ? [req.body.imageUrl] : undefined
     }).catch(console.error);
     console.log(post);
 }
+
 
 
 module.exports = { run }
