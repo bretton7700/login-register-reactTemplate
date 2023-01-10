@@ -19,6 +19,7 @@ import NdovuTuskeechat from './components/Tuskeechat/NdovuTuskeechat';
 import TuskeechatPlans from './components/Tuskeechat/TuskeechatPlans';
 import IntelligentWeb from './components/Ecommerce/IntelligentWeb';
 import Post from './components/aryshare/Post';
+import AddMysql from './components/Databases/AddMysql';
 
 const ROLES = {
   'User': 2001,
@@ -92,6 +93,10 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/aryshare" element={<Post />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/addmysqldb" element={<AddMysql />} />
             </Route>
 
 

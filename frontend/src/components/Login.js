@@ -42,15 +42,16 @@ const Login = () => {
             const logged_Email =response.data.email;
             console.log(logged_Email)
             localStorage.setItem('userEmail', logged_Email);
+            const user_company = response.data.company;
+            console.log(user_company)
+            localStorage.setItem('company', user_company);
 
            //ensure you remove this
-            console.log(JSON.stringify(response));
+            // console.log(JSON.stringify(response));
            
             const accessToken = response?.data?.accessToken;
             const roles = response?.data?.roles;
-            const logged_company = response?.data?.companyname;
-            console.log(logged_company)
-            localStorage.setItem('company', logged_company);
+            
             setAuth({email, pwd, roles, accessToken });
             setEmail('');
             setPwd('');
