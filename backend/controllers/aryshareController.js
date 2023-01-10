@@ -10,6 +10,7 @@ const run = async (req, res) => {
         mediaUrls: req.body.imageUrl ? [req.body.imageUrl] : undefined
     }).catch(console.error);
     console.log(post);
+    res.status(201).json({ 'success': `New post Published  ` });
 }
 
 
