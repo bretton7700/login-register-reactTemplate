@@ -162,17 +162,14 @@ const handleDatabaseCreation = async (req, res) => {
     };
     var docker = new Docker(options);
 
-    docker.command(`run -d -it  --name ${dbname} -p ${chosenport}:3306 --cap-add=sys_nice -e MYSQL_ROOT_PASSWORD=${hashedPwd} -e MYSQL_DATABASE=${dbname} -v ${dbname}:/var/lib/mysql mysql`).then(function (data) {
+   
+    await docker.command(`run -d -it  --name ${dbname} -p ${chosenport}:3306 --cap-add=sys_nice -e MYSQL_ROOT_PASSWORD=${hashedPwd} -e MYSQL_DATABASE=${dbname} -v ${dbname}:/var/lib/mysql mysql`)
+      .then(function (data) {
         console.log('data = ', data);
         console.log(data.containerId);
-    });
-    // docker.command(`run -d -it  --name ${dbname} -p ${chosenport}:3306 --cap-add=sys_nice -e MYSQL_ROOT_PASSWORD=${hashedPwd} -e MYSQL_DATABASE=${dbname} -v ${dbname}:/var/lib/mysql mysql`)
-    //   .then(function (data) {
-    //     console.log('data = ', data);
-    //     console.log(data.containerId);
-    //   }).catch(err => {
-    //     console.log("Error when creating container: ", err);
-    //   });
+      }).catch(err => {
+        console.log("Error when creating container: ", err);
+      });
   
   };
   
