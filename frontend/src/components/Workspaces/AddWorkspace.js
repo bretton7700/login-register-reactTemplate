@@ -48,7 +48,7 @@ const AddWorkspace = () => {
         axiosPrivate.get(CheckUniqueWorkspaces_URL,
             {
                 params: {
-                    Workspace: Workspace_Name,
+                    Workspace_Name: Workspace_Name,
                 },
             })
             .then((response) => {
@@ -63,7 +63,7 @@ const AddWorkspace = () => {
                             {
                                 params: {
                                     suit: suitName,
-                                    level: status,
+                                    status: status,
                                     company: userCompany
                                 },
                             }).then((response) => {
