@@ -49,7 +49,7 @@ const workspacesSchema = new Schema({
     },
     timePaid: {
         type: String,
-        required: true
+        default: 1
     },
     expired: {
         type: String,
