@@ -45,7 +45,7 @@ const AddWorkspace = () => {
     const submitWorkspace = (event) => {
 
         event.preventDefault();
-        axiosPrivate.get(CheckUniqueWorkspaces_URL,
+        axiosPrivate.get(`${CheckUniqueWorkspaces_URL}/${Workspace_Name}`,
             {
                 params: {
                     Workspace_Name: Workspace_Name,
@@ -59,7 +59,7 @@ const AddWorkspace = () => {
                         alert('please fill in details')
                     }
                     else {
-                        axiosPrivate.get(AvailableWorkspaceTrials_URL,
+                        axiosPrivate.get(`${AvailableWorkspaceTrials_URL}/${suitName}/${status}/${userCompany}`,
                             {
                                 params: {
                                     suit: suitName,
