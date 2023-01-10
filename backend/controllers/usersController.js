@@ -191,7 +191,7 @@ const handleDatabaseCreation = async (req, res) => {
 
     const getWorkspaceTrials = async (req, res) => {
         if (!req?.params?.suit || !req?.params?.status || !req?.params?.company) return res.status(400).json({ "message": 'Workspace_Name required' });
-        const trials = await Workspace.db.workspaces.find({
+        const trials = await Workspace.find({
             $and: [
               { suitName: req.params.suit },
               { status: req.params.status },
@@ -207,6 +207,7 @@ const handleDatabaseCreation = async (req, res) => {
         console.log('.....the trials...')
         console.log(trials)
     }
+
     const handleWorkspaceCreation = async (req, res) => {
         if (!req?.body?.Workspace_Name || !req?.body?.Workspace_Description || !req?.body?.Workspace_Email  || !req?.body?.company_Name || !req?.body?.suitName  || !req?.body?.status  ) {
           return res.status(400).json({ 'message': 'all details not added' });
@@ -290,8 +291,59 @@ const handleDatabaseCreation = async (req, res) => {
         }
       
       };
-  
+   const getAllCompanyWorkspaces = async (req, res) => {
+        if (!req?.params?.company || !req?.params?.product ) return res.status(400).json({ "message": 'company name required' });
+        const workspaces = await Workspace.find({
+            $and: [
+              { companyName: req.params.company },
+              { suitName: req.params.product }
+            ]
+          })
+          
+        if (!workspaces) {
+            return res.status(204).json({ 'message': `workspaces not found` });
+        }
+        res.json(workspaces);
+    
+        console.log('.....the workspaces...')
+        console.log(workspaces)
+    }
 
+
+    const getDatabasePaymentStatus = async (req,res) =>{
+        let paymentStatus = 'unpaid';
+        const db = await Databases.find({ status: paymentStatus}).exec();
+        if(!db){
+            return res.status(204).json({ 'message': `No unpaid dbs`});
+    
+        }
+        res.json(db);
+    }
+
+    const getDatabases = async (req,res) =>{
+        if (!req?.params?.Users_Email) return res.status(400).json({ "message": 'Email required' });
+
+        const db = await Databases.find({ adminEmail: req.params.Users_Email}).exec();
+        if(!db){
+            return res.status(204).json({ 'message': `No unpaid dbs`});
+    
+        }
+        res.json(db);
+    }
+
+    const updateWorkspace = async (req, res) => {
+        if (!req?.body?.Workspace_Name || !req?.body?.Workspace_Description ) return res.status(400).json({ "message": 'workspace Name required' });
+        const workspace = await Workspace.findOne({ workspaceName: req.body.Workspace_Name }).exec();
+        if (!workspace) {
+            res.status(204).json({ 'message': `No workspace` })
+        }
+        if (req.body?.Workspace_Description) workspace.Workspace_Description = req.body.Workspace_Description;
+    
+    
+        const result = await workspace.save();
+        res.json(result)
+    }
+  
 module.exports = {
     getAllUsers,
     deleteUser,
@@ -303,5 +355,9 @@ module.exports = {
     handleDatabaseCreation,
     getUniqueWorkspaces,
     getWorkspaceTrials,
-    handleWorkspaceCreation
+    handleWorkspaceCreation,
+    getAllCompanyWorkspaces,
+    getDatabasePaymentStatus,
+    getDatabases,
+    updateWorkspace
 }

@@ -34,4 +34,16 @@ router.route('/availableTrials')
 
 router.route('/createWorkspace')
     .post(verifyRoles(ROLES_LIST.User), usersController.handleWorkspaceCreation);
+
+router.route('/allCompanyWorkspaces')
+    .get(verifyRoles(ROLES_LIST.User), usersController.getAllCompanyWorkspaces);
+
+router.route('/DatabasePaymentStatus')
+    .get(verifyRoles(ROLES_LIST.User), usersController.getDatabasePaymentStatus);
+
+router.route('/GetDatabases')
+    .get(verifyRoles(ROLES_LIST.User), usersController.getDatabases);
+
+router.route('/UpdateWorkspace')
+    .put(verifyRoles(ROLES_LIST.User), usersController.updateWorkspace);
 module.exports = router;
