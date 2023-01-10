@@ -7,8 +7,8 @@ import '../sidebar.css';
 const userEmail = localStorage.getItem('userEmail');
 console.log(userEmail)
 
-const UniqueDB_URL = '/databases/unique';
-const CreateDB_URL = '/databases/create';
+const UniqueDB_URL = '/users/unique';
+const CreateDB_URL = '/users/createDB';
 
 
 const AddMysql = () => {
