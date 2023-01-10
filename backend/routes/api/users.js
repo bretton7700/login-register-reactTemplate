@@ -20,7 +20,7 @@ router.route('/requestPremium')
 router.route('/purchases')
     .post(verifyRoles(ROLES_LIST.User), usersController.handlePurchases);
     
-router.route('/unique')
+router.route('/unique/:Database_Name')
     .get(verifyRoles(ROLES_LIST.User), usersController.getUniqueDatabase);
 
 router.route('/create')
