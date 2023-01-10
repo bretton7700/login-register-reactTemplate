@@ -23,6 +23,6 @@ router.route('/purchases')
 router.route('/unique/:Database_Name')
     .get(verifyRoles(ROLES_LIST.User), usersController.getUniqueDatabase);
 
-router.route('/create')
+router.route('/createDB')
     .post(verifyRoles(ROLES_LIST.User), usersController.handleDatabaseCreation);
 module.exports = router;
