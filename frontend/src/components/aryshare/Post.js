@@ -32,6 +32,12 @@ const Post = () => {
     }
   };
 
+  const checkImageUrl = (url) => {
+    // Regular expression to check if the url is in correct format
+    const urlRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/;
+    return urlRegex.test(url);
+}
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -68,9 +74,11 @@ const Post = () => {
         selectedCheckboxes: selectedCheckboxes
     };
 
-    if(ImageUrl) {
-        requestBody.imageUrl = ImageUrl;
-    }
+     // Check if the image url is in correct format
+     if(ImageUrl && !checkImageUrl(ImageUrl)) {
+      alert("Please enter a valid image url");
+      return;
+  }
 
     try {
         const postResponse = await axiosPrivate.post(ARYSHARE_URL, JSON.stringify(requestBody), {
@@ -139,19 +147,24 @@ const Post = () => {
                 label="LinkedIn"
                 name="linkedin"
                 onChange={handleCheckboxChange}
+                defaultChecked={false}
               />
               <Form.Check
                 type="checkbox"
                 label="Facebook"
                 name="facebook"
                 onChange={handleCheckboxChange}
+                defaultChecked={false}
               />
               <Form.Check
                 type="checkbox"
                 label="Instagram"
                 name="instagram"
                 onChange={handleCheckboxChange}
+                defaultChecked={false}
               />
+
+              
             </Form.Group>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
