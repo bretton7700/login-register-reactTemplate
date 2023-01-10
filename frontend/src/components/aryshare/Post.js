@@ -20,7 +20,7 @@ const Post = () => {
 
   const [description, setDescription] = useState('')
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
-  const [ ImageUrl, setImageUrl] = useState('');
+  const [ImageUrl, setImageUrl] = useState('');
 
   const handleCheckboxChange = (event) => {
     const { name } = event.target;
@@ -36,7 +36,7 @@ const Post = () => {
     // Regular expression to check if the url is in correct format
     const urlRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/;
     return urlRegex.test(url);
-}
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,50 +52,52 @@ const Post = () => {
 
     // LinkedIn doesn't take more than 700 words
     if (descriptionWords.length > 700) {
-        alert('The description cannot exceed 700 words');
-        return;
+      alert('The description cannot exceed 700 words');
+      return;
     }
     if (description.length === 0) {
-        alert('Please fill in the details');
-        return;
+      alert('Please fill in the details');
+      return;
     }
 
     // Check if at least one checkbox is selected
-    if(selectedCheckboxes.length === 0) {
-        alert("please select atleast one checkbox")
-        return
+    if (selectedCheckboxes.length === 0) {
+      alert("please select atleast one checkbox")
+      return
     }
 
     // include the videos or images in the request body, depending on what the user has entered
     let requestBody;
 
     requestBody = {
-        description: description,
-        selectedCheckboxes: selectedCheckboxes
+      description: description,
+      selectedCheckboxes: selectedCheckboxes
     };
 
-     // Check if the image url is in correct format
-     if(ImageUrl && !checkImageUrl(ImageUrl)) {
+    // Check if the image url is in correct format
+    if (ImageUrl && !checkImageUrl(ImageUrl)) {
       alert("Please enter a valid image url");
       return;
-  }
+    } else {
+      requestBody.imageUrl = ImageUrl;
+    }
 
     try {
-        const postResponse = await axiosPrivate.post(ARYSHARE_URL, JSON.stringify(requestBody), {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true
-        });
+      const postResponse = await axiosPrivate.post(ARYSHARE_URL, JSON.stringify(requestBody), {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      });
 
-        console.log(JSON.stringify(postResponse?.data));
-        setDescription('');
-        setSelectedCheckboxes([]);
-        setImageUrl('');
-        handleShowing();
-        setTimeout(handleClosing, 2000);
+      console.log(JSON.stringify(postResponse?.data));
+      setDescription('');
+      setSelectedCheckboxes([]);
+      setImageUrl('');
+      handleShowing();
+      setTimeout(handleClosing, 2000);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
+  };
 
 
 
@@ -141,7 +143,7 @@ const Post = () => {
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Select Channel</Form.Label>
+              <Form.Label>Select Channel</Form.Label>
               <Form.Check
                 type="checkbox"
                 label="LinkedIn"
@@ -164,7 +166,7 @@ const Post = () => {
                 defaultChecked={false}
               />
 
-              
+
             </Form.Group>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
