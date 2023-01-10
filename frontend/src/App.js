@@ -20,7 +20,8 @@ import TuskeechatPlans from './components/Tuskeechat/TuskeechatPlans';
 import IntelligentWeb from './components/Ecommerce/IntelligentWeb';
 import Post from './components/aryshare/Post';
 import AddMysql from './components/Databases/AddMysql';
-
+import AddWorkspace from './components/Workspaces/AddWorkspace';
+import WorkspaceList from './components/Workspaces/WorkspaceList';
 const ROLES = {
   'User': 2001,
   'Editor': 1984,
@@ -98,6 +99,17 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/addmysqldb" element={<AddMysql />} />
             </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/addworkspace" element={<AddWorkspace />} />
+            </Route>
+
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/datatrunk" element={<WorkspaceList />} />
+            </Route>
+
+
 
 
 
