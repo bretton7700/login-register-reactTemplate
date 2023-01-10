@@ -26,10 +26,10 @@ router.route('/unique/:Database_Name')
 router.route('/createDB')
     .post(verifyRoles(ROLES_LIST.User), usersController.handleDatabaseCreation);
 
-router.route('/uniqueWorkspaces')
+router.route('/uniqueWorkspaces/:Workspace_Name')
     .get(verifyRoles(ROLES_LIST.User), usersController.getUniqueWorkspaces);
     
-router.route('/availableTrials')
+router.route('/availableTrials/:suit/:status/:company')
     .get(verifyRoles(ROLES_LIST.User), usersController.getWorkspaceTrials);
 
 router.route('/createWorkspace')
