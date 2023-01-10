@@ -25,4 +25,13 @@ router.route('/unique/:Database_Name')
 
 router.route('/createDB')
     .post(verifyRoles(ROLES_LIST.User), usersController.handleDatabaseCreation);
+
+router.route('/uniqueWorkspaces')
+    .get(verifyRoles(ROLES_LIST.User), usersController.getUniqueWorkspaces);
+    
+router.route('/availableTrials')
+    .get(verifyRoles(ROLES_LIST.User), usersController.getWorkspaceTrials);
+
+router.route('/createWorkspace')
+    .post(verifyRoles(ROLES_LIST.User), usersController.handleWorkspaceCreation);
 module.exports = router;

@@ -4,7 +4,7 @@ const Premium = require('../model/Premium');
 const Purchase = require('../model/Purchases');
 const Databases = require("../model/Databases");
 const Port = require("../model/Ports");
-
+const Workspace = require("../model/Workspaces");
 var dockerCLI = require('docker-cli-js');
 var Docker = dockerCLI.Docker;
 
@@ -176,6 +176,120 @@ const handleDatabaseCreation = async (req, res) => {
   function getRandomNumberBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
     }
+
+    const getUniqueWorkspaces = async (req, res) => {
+        if (!req?.params?.Workspace_Name) return res.status(400).json({ "message": 'Workspace_Name required' });
+        const workspace = await Workspace.findOne({ workspaceName: req.params.Workspace_Name }).exec();
+        if (!workspace) {
+            return res.status(204).json({ 'message': `User with db Name ${req.params.Workspace_Name} not found` });
+        }
+        res.json(workspace);
+    
+        console.log('.....the workspace...')
+        console.log(workspace)
+    }
+
+    const getWorkspaceTrials = async (req, res) => {
+        if (!req?.params?.suit || !req?.params?.status || !req?.params?.company) return res.status(400).json({ "message": 'Workspace_Name required' });
+        const trials = await Workspace.db.workspaces.find({
+            $and: [
+              { suitName: req.params.suit },
+              { status: req.params.status },
+              { companyName: req.params.company }
+            ]
+          })
+          
+        if (!trials) {
+            return res.status(204).json({ 'message': `trials not found` });
+        }
+        res.json(trials);
+    
+        console.log('.....the trials...')
+        console.log(trials)
+    }
+    const handleWorkspaceCreation = async (req, res) => {
+        if (!req?.body?.Workspace_Name || !req?.body?.Workspace_Description || !req?.body?.Workspace_Email  || !req?.body?.company_Name || !req?.body?.suitName  || !req?.body?.status  ) {
+          return res.status(400).json({ 'message': 'all details not added' });
+        }
+        
+        // Extracting the relevant variables from the request
+        const { Workspace_Name, Workspace_Description, Workspace_Email,company_Name,status,suitName } = req.body;
+        const workspacename = Workspace_Name.split(" ").join("").toLowerCase().replace(/[^a-zA-Z ]/g, "");
+        
+        
+        // Pick a random port for the database
+        let chosenport = getRandomNumberBetween(13000, 13151);
+        var outsidePort = (chosenport + 1000)
+        const Workspace_Link = `https://datatrunk.ndovucloud.com:${outsidePort}`;
+        
+        // Check if the port is already in use
+        const port_Numbers = await Port.find({}, { port_Number: 1 });
+        const allPorts = Object.values(port_Numbers);
+        
+        while(allPorts.indexOf(chosenport) !== -1){
+          chosenport = getRandomNumberBetween(13000, 13151);
+        }
+      
+        // Create a new Port
+        try {
+          await Port.create({
+            "workspaceName": workspacename,
+            "port": chosenport,
+          });
+        } catch (err) {
+          console.error(err);
+          return res.status(500).json({ 'message': 'Error creating port' });
+        }
+      
+        // Create a new Database
+        try {
+          const result = await Workspace.create({
+              "workspaceName": workspacename,
+              "workspaceDescription": Workspace_Description,
+              "workspaceLink": Workspace_Link,
+              "workspaceEmail": Workspace_Email,
+              "companyName": company_Name,
+              "suitName": suitName,
+              "status": status
+             
+          });
+          console.log(result);
+          res.status(201).json({ 'success': `New workspace  created ` });
+        } catch (err) {
+          console.error(err);
+          return res.status(500).json({ 'message': 'Error creating Database' });
+        }
+       
+      
+        // Create the Docker container
+        const options = {
+          machineName: null, // uses local docker
+          currentWorkingDirectory: null, // uses current working directory
+          echo: true, // echo command output to stdout/stderr
+        };
+        var docker = new Docker(options);
+         //the link
+    
+
+    
+       
+         if (suitName == 'datatrunk') {
+            docker.command(`network create ${workspacename} `).then(function (data) {
+                console.log('data = ', data);
+
+            });
+
+            setTimeout(function () {
+                docker.command(`run  -d -p ${outsidePort}:8088 -v ${workspacename}:/app --name ${workspacename} --network ${workspacename} bretton77/datatrunktrial:1.0.0`).then(function (data) {
+                    console.log('data = ', data);
+                    console.log(data.containerId);
+                });
+
+            }, 1800)
+
+        }
+      
+      };
   
 
 module.exports = {
@@ -186,5 +300,8 @@ module.exports = {
     handlePremiumRequest,
     handlePurchases,
     getUniqueDatabase,
-    handleDatabaseCreation
+    handleDatabaseCreation,
+    getUniqueWorkspaces,
+    getWorkspaceTrials,
+    handleWorkspaceCreation
 }
