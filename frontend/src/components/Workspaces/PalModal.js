@@ -3,7 +3,7 @@ import Slider from '@mui/material/Slider';
 import Axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Modal, Row } from "react-bootstrap";
-import "./PalModal.css";
+import "../PalModal.css";
 import PayPal from "./PayPal";
 import ProPayPal from "./ProPayPal";
 
