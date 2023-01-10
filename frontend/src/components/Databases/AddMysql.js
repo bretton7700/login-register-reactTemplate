@@ -8,7 +8,7 @@ const userEmail = localStorage.getItem('userEmail');
 console.log(userEmail)
 
 const UniqueDB_URL = '/databases/unique';
-const CreateDB_URL = '/linkedin/schedule';
+const CreateDB_URL = '/databases/create';
 
 
 const AddMysql = () => {
@@ -81,7 +81,7 @@ const AddMysql = () => {
                         <div className="accordion-item" id="accordionFlushExample">
 
                             <div className="accordion-body">
-                                <Card.Title> You have successfully Created a Mysql Database</Card.Title>
+                                <Card.Title> You have successfully Created a Mysql Database <br/> Ensure You store your Password as it won't be Provided</Card.Title>
 
                             </div>
 
