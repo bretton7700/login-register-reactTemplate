@@ -55,17 +55,7 @@ const PayPal = ({ current_Starter_Workspace, Starter_Payment_Amount, value, Peri
                     console.log(order.status);
                     deleteOldWorkspace();
                     UpdateOldWorkspaceLink();
-                    //!BGN 5/20/2022 Purchase Event
-                    setTimeout(function(){
-                        import('react-facebook-pixel')
-                        .then((x) => x.default)
-                        .then((ReactPixel) => {
-                            ReactPixel.init('360261592349789')
-                            ReactPixel.track('Purchase')
-
-                        })
-
-                    },500)
+                    
                     
 
                 },

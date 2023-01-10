@@ -42,17 +42,7 @@ const PayDatabase = ({ Current_Workspace_Name }) => {
                     console.log(order.status);
                     UpdateDatabaseStatus();
 
-                     //!BGN 5/20/2022 Purchase Event
-                     setTimeout(function(){
-                        import('react-facebook-pixel')
-                        .then((x) => x.default)
-                        .then((ReactPixel) => {
-                            ReactPixel.init('360261592349789')
-                            ReactPixel.track('Purchase')
-
-                        })
-
-                    },500)
+                     
 
 
                 },

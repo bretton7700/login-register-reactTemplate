@@ -54,17 +54,7 @@ const ProPayPal = ({ Current_Pro_Workspace, Pro_Payment_Amount, Users_Paid_For, 
                     deleteOldWorkspace();
                     UpdateOldWorkspaceLink();
                     // window.location.reload();
-                    //!BGN 5/20/2022 Purchase Event
-                    setTimeout(function(){
-                        import('react-facebook-pixel')
-                        .then((x) => x.default)
-                        .then((ReactPixel) => {
-                            ReactPixel.init('360261592349789')
-                            ReactPixel.track('Purchase')
-
-                        })
-
-                    },500)
+                    
                 },
                 onError: (err) => {
                     console.log(err)
