@@ -66,6 +66,7 @@ app.use(cookieSession({
     keys: sessionKeys
 }));
 app.use('/linkedin',require('./routes/api/linkedin'));
+app.use('/aryshare',require('./routes/api/aryshare'));
 // Set up the cron job to run every minute
 const job = new cron.CronJob('* * * * *', sendPosts.sendPosts);
 job.start();
