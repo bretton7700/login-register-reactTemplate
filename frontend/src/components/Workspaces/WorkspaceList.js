@@ -40,7 +40,7 @@ const WorkspaceList = () => {
     
     
 
-    axiosPrivate.get(GetWorkspaces_URL, {
+    axiosPrivate.get(`${GetWorkspaces_URL}/${userCompany}/${suitName}`, {
         params: {
 
           company: userCompany,
@@ -58,7 +58,7 @@ const WorkspaceList = () => {
 
   })
 
-  axiosPrivate.get(GetDatabases_URL
+  axiosPrivate.get(`${GetDatabases_URL}/${userEmail}`
 
       , {
           params: {
