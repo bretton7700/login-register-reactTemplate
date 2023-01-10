@@ -18,6 +18,7 @@ import ImageGenerator from './components/FreeServices/ImageGenerator';
 import NdovuTuskeechat from './components/Tuskeechat/NdovuTuskeechat';
 import TuskeechatPlans from './components/Tuskeechat/TuskeechatPlans';
 import IntelligentWeb from './components/Ecommerce/IntelligentWeb';
+import Post from './components/aryshare/Post';
 
 const ROLES = {
   'User': 2001,
@@ -87,6 +88,10 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/ecommercebuilder" element={<IntelligentWeb />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/aryshare" element={<Post />} />
             </Route>
 
 

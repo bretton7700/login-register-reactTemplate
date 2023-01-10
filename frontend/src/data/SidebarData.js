@@ -85,7 +85,7 @@ export const SidebarData = [
             },
             {
                 title: "Booth",
-                path: "/booth",
+                path: "/aryshare",
                 icon: <Create />,
             },
             
