@@ -39,7 +39,7 @@ const AddMysql = () => {
             return;
         }
         try {
-            const { data } = await axiosPrivate.get(UniqueDB_URL, { params: { Database_Name: databaseName } });
+            const { data } = await axiosPrivate.get(`${UniqueDB_URL}/${databaseName}`, { params: { Database_Name: databaseName } });
             if (data.length === 0) {
                 axiosPrivate.post(CreateDB_URL, {
                     databaseName: databaseName,
