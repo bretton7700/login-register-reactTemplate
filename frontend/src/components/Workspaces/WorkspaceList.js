@@ -65,7 +65,7 @@ const WorkspaceList = () => {
       }
     }
     fetchData();
-  }, [suitName, WorkspaceList, databaseList]);
+  }, []);
 
   const updateWorkspace = async (Workspace) => {
     if (!newWorkspaceDescription) {
