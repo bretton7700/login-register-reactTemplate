@@ -291,23 +291,27 @@ const handleDatabaseCreation = async (req, res) => {
         }
       
       };
-   const getAllCompanyWorkspaces = async (req, res) => {
-        if (!req?.params?.company || !req?.params?.product ) return res.status(400).json({ "message": 'company name required' });
-        const workspaces = await Workspace.find({
-            $and: [
-              { companyName: req.params.company },
-              { suitName: req.params.product }
-            ]
-          })
-          
-        if (!workspaces) {
-            return res.status(204).json({ 'message': `workspaces not found` });
+      const getAllCompanyWorkspaces = async (req, res) => {
+        try {
+          if (!req?.params?.company || !req?.params?.product) {
+            return res.status(400).json({ message: 'company name and product are required' });
+          }
+      
+          const workspaces = await Workspace.find({
+              companyName: req.params.company,
+              suitName: req.params.product,
+          });
+      
+          if (!workspaces) {
+            return res.status(204).json({ message: 'workspaces not found' });
+          }
+          return res.json(workspaces);
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: 'Internal Server Error' });
         }
-        res.json(workspaces);
-    
-        console.log('.....the workspaces...')
-        console.log(workspaces)
-    }
+      };
+      
 
 
     const getDatabasePaymentStatus = async (req,res) =>{
