@@ -36,58 +36,54 @@ const WorkspaceList = () => {
   const [shower, setShowing] = useState(false);
 
 
-  useEffect(() => {
-    
-    
-
-    axiosPrivate.get(`${GetWorkspaces_URL}/${userCompany}/${suitName}`, {
+  
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Fetch workspaces
+      const workspaceResponse = await axiosPrivate.get(`${GetWorkspaces_URL}/${userCompany}/${suitName}`, {
         params: {
-
           company: userCompany,
           product: suitName,
         },
-      }).then((response) => {
-        setWorkspaceList(response.data);
-      })
-    //databases 
-    axiosPrivate.get(DatabasePaymentStatus_URL).then((response) => {
-      const data = response.data;
-     
-      //BGN 4/6/2022 LIST OF UNPAID DATABASES
+      });
+      setWorkspaceList(workspaceResponse.data);
+
+      // Fetch databases
+      const databaseResponse = await axiosPrivate.get(DatabasePaymentStatus_URL);
+      const data = databaseResponse.data;
       global.Trial_Databases_List = data.map(({ databaseName }) => databaseName);
-
-  })
-
-  axiosPrivate.get(`${GetDatabases_URL}/${userEmail}`
-
-      , {
+      
+      const userDatabasesResponse = await axiosPrivate.get(`${GetDatabases_URL}/${userEmail}`, {
           params: {
               Users_Email: userEmail,
-
           }
-      }
-
-  )
-      .then((response) => {
-          setdatabaseList(response.data);
-      })
-
-  }, [ suitName, WorkspaceList,databaseList]);
-
-  const updateWorkspace = (Workspace) => {
-    if (newWorkspaceDescription.length === 0) {
-      console.log('kindly enter value');
-    } else {
-        axiosPrivate.put(UpdateWorkspace_URL, {
-        Workspace_Name: Workspace,
-        Workspace_Description: newWorkspaceDescription,
       });
-      setNewWorkspaceDescription("");
-
+      setdatabaseList(userDatabasesResponse.data);
+    } catch (error) {
+      console.error(error);
     }
+  }
+  fetchData();
+}, [ suitName, WorkspaceList,databaseList]);
 
+const updateWorkspace = async (Workspace) => {
+  if (!newWorkspaceDescription) {
+    alert('Please enter a description');
+    return;
+  }
 
-  };
+  try {
+    await axiosPrivate.put(UpdateWorkspace_URL, {
+      Workspace_Name: Workspace,
+      Workspace_Description: newWorkspaceDescription,
+    });
+    setNewWorkspaceDescription("");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 
 
@@ -98,7 +94,7 @@ const WorkspaceList = () => {
         <div className="accordion accordion-flush" id="accordionFlushExample" style={{ maxWidth: '600px', width: '600px' }}>
           {WorkspaceList.map((val, index) => {
             //BGN 4/11/2022 TRIAL_CREATEDDATE CHANGES TO TODAYS DATE EVERYDAY
-            const Trial_CreatedDate = val.Workspace_TrialBeginning
+            const Trial_CreatedDate = val.workspaceTrialBeginning
             const dayItExpires = val.expiryDate
 
             const date1 = new Date(Trial_CreatedDate);
@@ -116,7 +112,7 @@ const WorkspaceList = () => {
               global.Days_Both_PaidAnd_Trial = diffDays
             //   if (diffDays === 2) {
             //     axiosPrivate.post("https://backend.droplets.ndovucloud.com/api/TrialExpiry", {
-            //       WorkspaceOwnerEmail: val.Workspace_Email,
+            //       WorkspaceOwnerEmail: val.workspaceEmail,
                  
             //     });
             //   }
@@ -126,7 +122,7 @@ const WorkspaceList = () => {
               <div className="accordion-item" id="accordionFlushExample" key={index}>
                 <h2 className="accordion-header">
                   <button style={{ textTransform: 'capitalize' }} className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#flush-" + index} aria-expanded="false" aria-controls={"flush-" + index} >
-                    {val.Workspace_Name} {" "} <div style={{ width: '600px', textAlign: "right" }}>Click Here to begin</div>
+                    {val.workspaceName} {" "} <div style={{ width: '600px', textAlign: "right" }}>Click Here to begin</div>
                   </button>
                 </h2>
                 <div id={"flush-" + index} className="accordion-collapse collapse" aria-labelledby={"flush-heading" + index} data-bs-parent="#accordionFlushExample">
@@ -141,7 +137,7 @@ const WorkspaceList = () => {
 
                     <Card.Title style={{ textTransform: 'capitalize' }}>Name: {val.Workspace_Name}</Card.Title>
                     <Card.Text style={{ textTransform: 'capitalize' }}>Description: {val.Workspace_Description}</Card.Text>
-                    <Card.Link href={val.Workspace_Link}>
+                    <Card.Link href={val.workspaceLink}>
                       <Alert severity="info">
                         <AlertTitle>Start {val.status}</AlertTitle>
 
@@ -158,9 +154,9 @@ const WorkspaceList = () => {
 
                       <Form.Group>
                         <Button className='mr-2' variant="warning" size='sm' onClick={() => { updateWorkspace(val.Workspace_Name) }}>Update</Button>
-                        <MyModal Current_Workspace_Name={val.Workspace_Name} />
-                        <PalModal Current_Workspace_Name={val.Workspace_Name} />
-                        <Delete Current_Workspace_Name={val.Workspace_Name} />
+                        <MyModal Current_Workspace_Name={val.workspaceName} />
+                        <PalModal Current_Workspace_Name={val.workspaceName} />
+                        <Delete Current_Workspace_Name={val.workspaceName} />
 
                       </Form.Group>
                     </Form>
@@ -178,7 +174,7 @@ const WorkspaceList = () => {
 
 
 
-                        global.uri = `mysql://root:${val.rootPassword}@164.92.77.118:${val.port}/${val.databaseName}`
+                        global.uri = `mysql://root:yourpass@164.92.77.118:${val.port}/${val.databaseName}`
                         global.databaseType = 'Please Pay ';
                         global.username = 'Please Pay';
                         global.password = 'Please Pay';
@@ -199,7 +195,7 @@ const WorkspaceList = () => {
                             global.dbName = 'please pay';
                             global.payButton = 'Pay Mysql';
                         } else {
-                            global.uri = `mysql://root:${val.rootPassword}@164.92.77.118:${val.port}/${val.databaseName}`
+                            global.uri = `mysql://root:Yourpass@164.92.77.118:${val.port}/${val.databaseName}`
                             global.databaseType = 'mysql';
                             global.username = 'root';
                             global.password = `yourpass`;
