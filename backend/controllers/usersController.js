@@ -112,7 +112,7 @@ const handleDatabaseCreation = async (req, res) => {
     // Extracting the relevant variables from the request
     const { databaseName, rootPassword, Admin_Email } = req.body;
     const dbname = databaseName.split(" ").join("").toLowerCase().replace(/[^a-zA-Z ]/g, "");
-    const hashedPwd = await bcrypt.hash(rootPassword, 10);
+
     
     // Pick a random port for the database
     let chosenport = getRandomNumberBetween(13000, 13151);
@@ -140,7 +140,7 @@ const handleDatabaseCreation = async (req, res) => {
     try {
       const result = await Databases.create({
           "databaseName": dbname,
-          "rootPassword": hashedPwd,
+          "rootPassword": rootPassword,
           "adminEmail": Admin_Email,
           "uri": `mysql://root:yourPass@164.92.77.118:${chosenport}/${dbname}`,
           "port": chosenport,
@@ -163,7 +163,7 @@ const handleDatabaseCreation = async (req, res) => {
     var docker = new Docker(options);
 
    
-    await docker.command(`run -d -it  --name ${dbname} -p ${chosenport}:3306 --cap-add=sys_nice -e MYSQL_ROOT_PASSWORD=${hashedPwd} -e MYSQL_DATABASE=${dbname} -v ${dbname}:/var/lib/mysql mysql`)
+    await docker.command(`run -d -it  --name ${dbname} -p ${chosenport}:3306 --cap-add=sys_nice -e MYSQL_ROOT_PASSWORD=${rootPassword} -e MYSQL_DATABASE=${dbname} -v ${dbname}:/var/lib/mysql mysql`)
       .then(function (data) {
         console.log('data = ', data);
         console.log(data.containerId);
