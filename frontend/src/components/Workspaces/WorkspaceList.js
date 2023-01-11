@@ -23,8 +23,8 @@ const UpdateWorkspace_URL = '/users/UpdateWorkspace';
 
 const WorkspaceList = () => {
   const axiosPrivate = useAxiosPrivate();
- 
-  
+
+
   const [WorkspaceList, setWorkspaceList] = useState([])
 
   const suitName = 'datatrunk'
@@ -32,57 +32,57 @@ const WorkspaceList = () => {
 
   //Databases List
   const [databaseList, setdatabaseList] = useState([])
-  
+
   const [shower, setShowing] = useState(false);
+  const [Trial_Databases_List, setTrialDatabaseList] = useState([])
 
 
-  
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      // Fetch workspaces
-      const workspaceResponse = await axiosPrivate.get(`${GetWorkspaces_URL}/${userCompany}/${suitName}`, {
-        params: {
-          company: userCompany,
-          product: suitName,
-        },
-      });
-      setWorkspaceList(workspaceResponse.data);
-
-      // Fetch databases
-      const databaseResponse = await axiosPrivate.get(DatabasePaymentStatus_URL);
-      const data = databaseResponse.data;
-      global.Trial_Databases_List = data.map(({ databaseName }) => databaseName);
-      
-      const userDatabasesResponse = await axiosPrivate.get(`${GetDatabases_URL}/${userEmail}`, {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch workspaces
+        const workspaceResponse = await axiosPrivate.get(`${GetWorkspaces_URL}/${userCompany}/${suitName}`, {
           params: {
-              Users_Email: userEmail,
+            company: userCompany,
+            product: suitName,
+          },
+        });
+        setWorkspaceList(workspaceResponse.data);
+
+        // Fetch databases
+        const databaseResponse = await axiosPrivate.get(DatabasePaymentStatus_URL);
+        const data = databaseResponse.data;
+       setTrialDatabaseList( data.map(({ databaseName }) => databaseName));
+
+        const userDatabasesResponse = await axiosPrivate.get(`${GetDatabases_URL}/${userEmail}`, {
+          params: {
+            Users_Email: userEmail,
           }
+        });
+        setdatabaseList(userDatabasesResponse.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [suitName, WorkspaceList, databaseList]);
+
+  const updateWorkspace = async (Workspace) => {
+    if (!newWorkspaceDescription) {
+      alert('Please enter a description');
+      return;
+    }
+
+    try {
+      await axiosPrivate.put(UpdateWorkspace_URL, {
+        Workspace_Name: Workspace,
+        Workspace_Description: newWorkspaceDescription,
       });
-      setdatabaseList(userDatabasesResponse.data);
+      setNewWorkspaceDescription("");
     } catch (error) {
       console.error(error);
     }
-  }
-  fetchData();
-}, [ suitName, WorkspaceList,databaseList]);
-
-const updateWorkspace = async (Workspace) => {
-  if (!newWorkspaceDescription) {
-    alert('Please enter a description');
-    return;
-  }
-
-  try {
-    await axiosPrivate.put(UpdateWorkspace_URL, {
-      Workspace_Name: Workspace,
-      Workspace_Description: newWorkspaceDescription,
-    });
-    setNewWorkspaceDescription("");
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
 
 
@@ -110,12 +110,12 @@ const updateWorkspace = async (Workspace) => {
 
             } else {
               global.Days_Both_PaidAnd_Trial = diffDays
-            //   if (diffDays === 2) {
-            //     axiosPrivate.post("https://backend.droplets.ndovucloud.com/api/TrialExpiry", {
-            //       WorkspaceOwnerEmail: val.workspaceEmail,
-                 
-            //     });
-            //   }
+              //   if (diffDays === 2) {
+              //     axiosPrivate.post("https://backend.droplets.ndovucloud.com/api/TrialExpiry", {
+              //       WorkspaceOwnerEmail: val.workspaceEmail,
+
+              //     });
+              //   }
             }
 
             return (
@@ -168,112 +168,110 @@ const updateWorkspace = async (Workspace) => {
         </div>
 
       </Card>
-      <Card className="border-ndovu rounded-0 my-3" style={{ float: 'left', alignItems: 'center' }}>
-                <div className="accordion accordion-flush" id="accordionFlushExample" style={{ maxWidth: '600px', width: '600px' }}>
-                    {databaseList.map((val, index) => {
+        <Card className="border-ndovu rounded-0 my-3" style={{ float: 'left', alignItems: 'center' }}>
+          <div className="accordion accordion-flush" id="accordionFlushExample" style={{ maxWidth: '600px', width: '600px' }}>
+            {databaseList.map((val, index) => {
+              // Define default properties on the val object
+              val.uri = `mysql://root:yourpass@164.92.77.118:${val.port}/${val.databaseName}`;
+              val.databaseType = 'Please Pay ';
+              val.username = 'Please Pay';
+              val.password = 'Please Pay';
+              val.Ip = 'Please Pay';
+              val.port = 'Please Pay';
+              val.dbName = 'Please Pay';
+              val.payButton = 'Pay Mysql';
+
+              // Check if database is in the trial list
+              if (Trial_Databases_List.indexOf(val.databaseName) !== -1) {
+                console.log("Value exists oeeeh!")
+                val.uri = 'please pay';
+                val.databaseType = 'please payonly $15';
+                val.username = 'please pay ';
+                val.password = 'please pay ';
+                val.Ip = 'please pay  ';
+                val.port = 'please pay ';
+                val.dbName = 'please pay';
+                val.payButton = 'Pay Mysql';
+              } else {
+                val.uri = `mysql://root:Yourpass@164.92.77.118:${val.port}/${val.databaseName}`
+                val.databaseType = 'mysql';
+                val.username  = 'root';
+                val.password = `yourpass`;
+                val.Ip = '164.92.77.118';
+                val.port = `${val.port}`;
+                val.dbName = `${val.databaseName}`;
+                val.payButton = 'Upgrade Mysql';
+              }
+
+              return (
+                <div className="accordion-item" id="accordionFlushExample" key={index}>
+                  <h2 className="accordion-header">
+                    <button style={{ textTransform: 'capitalize' }} className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#flush-" + index} aria-expanded="false" aria-controls={"flush-" + index} >
+                      {val.databaseName} {" "} <div style={{ width: '600px', textAlign: "right" }}>Click Here to Access</div>
+                    </button>
+                  </h2>
+                  <div id={"flush-" + index} className="accordion-collapse collapse" aria-labelledby={"flush-heading" + index} data-bs-parent="#accordionFlushExample">
+                    <div className="accordion-body">
+                      <div style={{ padding: '1px 4px 10px 1px ' }}>
+                        <Card.Title >Database Name:</Card.Title>
+                        <Card.Title >{val.databaseName}</Card.Title>
+                        <Card.Text >Root User:</Card.Text>
+                        <Card.Text >{global.username} </Card.Text>
+
+                        <Alert severity="info">
+                          <AlertTitle>
+                            <p>Database Type:</p>
+
+                            <p>{val.databaseType}</p>
+
+                            <p>Username:</p>
+                            <p> {val.username}</p>
 
 
-
-                        global.uri = `mysql://root:yourpass@164.92.77.118:${val.port}/${val.databaseName}`
-                        global.databaseType = 'Please Pay ';
-                        global.username = 'Please Pay';
-                        global.password = 'Please Pay';
-                        global.Ip = 'Please Pay';
-                        global.port = 'Please Pay';
-                        global.dbName = 'Please pay';
-                        global.payButton = 'Pay Mysql';
+                            <p>Password:</p>
+                            <p> your password</p>
 
 
-                        if (global.Trial_Databases_List.indexOf(val.databaseName) !== -1) {
-                            console.log("Value exists oeeeh!")
-                            global.uri = 'please pay';
-                            global.databaseType = 'please payonly $15';
-                            global.username = 'please pay ';
-                            global.password = 'please pay ';
-                            global.Ip = 'please pay  ';
-                            global.port = 'please pay ';
-                            global.dbName = 'please pay';
-                            global.payButton = 'Pay Mysql';
-                        } else {
-                            global.uri = `mysql://root:Yourpass@164.92.77.118:${val.port}/${val.databaseName}`
-                            global.databaseType = 'mysql';
-                            global.username = 'root';
-                            global.password = `yourpass`;
-                            global.Ip = '164.92.77.118';
-                            global.port = `${val.port}`;
-                            global.dbName = `${val.databaseName}`;
-                            global.payButton = 'Upgrade Mysql';
-                        }
-
-                        return (
-                            <div className="accordion-item" id="accordionFlushExample" key={index}>
-                                <h2 className="accordion-header">
-                                    <button style={{ textTransform: 'capitalize' }} className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#flush-" + index} aria-expanded="false" aria-controls={"flush-" + index} >
-                                        {val.databaseName} {" "} <div style={{ width: '600px', textAlign: "right" }}>Click Here to Access</div>
-                                    </button>
-                                </h2>
-                                <div id={"flush-" + index} className="accordion-collapse collapse" aria-labelledby={"flush-heading" + index} data-bs-parent="#accordionFlushExample">
-                                    <div className="accordion-body">
-                                        <div style={{ padding: '1px 4px 10px 1px ' }}>
-                                            <Card.Title >Database Name:</Card.Title> 
-                                            <Card.Title >{val.databaseName}</Card.Title>
-                                            <Card.Text >Root User:</Card.Text>
-                                            <Card.Text >{global.username} </Card.Text>
-
-                                            <Alert severity="info">
-                                                <AlertTitle>
-                                                    <p>Database Type:</p>
-                                                    
-                                                    <p>{global.databaseType}</p>
-                                                    
-                                                    <p>Username:</p>
-                                                    <p> {global.username}</p>
+                            <p>Ip:</p>
+                            <p> {val.Ip}</p>
 
 
-                                                    <p>Password:</p>
-                                                    <p> {global.password}</p>
+                            <p>Port:</p>
+                            <p> {val.port}</p>
 
 
-                                                    <p>Ip:</p>
-                                                    <p> {global.Ip}</p>
+                            <p>Database Name:</p>
+                            <p> {val.dbName}</p>
 
+                            <p>URI:</p>
+                            <p>{val.uri}</p>
+                            <br />
 
-                                                    <p>Port:</p>
-                                                    <p> {global.port}</p>
+                          </AlertTitle>
 
+                        </Alert>
 
-                                                    <p>Database Name:</p>
-                                                    <p> {global.dbName}</p>
+                      </div>
+                      <Form>
 
-                                                    <p>URI:</p>
-                                                    <p>{global.uri}</p>
-                                                    <br />
-
-                                                </AlertTitle>
-
-                                            </Alert>
-
-                                        </div>
-                                        <Form>
-
-                                            <Form.Group>
-                                                <Button onClick={() => {
-                                                    setShowing(true);
-                                                }}>{global.payButton}</Button>
-                                                {shower ? <PayDatabase Current_Workspace_Name={val.databaseName}> </PayDatabase> : <p>:</p>} {" "}
-                                                <DeleteDatabase Current_Workspace_Name={val.databaseName} />
-                                            </Form.Group>
-                                        </Form>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
+                        <Form.Group>
+                          <Button onClick={() => {
+                            setShowing(true);
+                          }}>{val.payButton}</Button>
+                          {shower ? <PayDatabase Current_Workspace_Name={val.databaseName}> </PayDatabase> : <p>:</p>} {" "}
+                          <DeleteDatabase Current_Workspace_Name={val.databaseName} />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                  </div>
                 </div>
-            </Card>
-      
+              );
+            })}
+          </div>
+        </Card>
+
       </Card>
-      
+
 
       {" "}
       <Card id='videos_Card' className="border-ndovu rounded-0 my-3" style={{ margin: '0 0 0 40px', float: 'right', alignItems: 'center' }}>
