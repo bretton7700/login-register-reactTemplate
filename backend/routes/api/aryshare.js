@@ -7,5 +7,7 @@ const verifyRoles = require('../../middleware/verifyRoles');
 router.route('/publish')
     .post(verifyRoles(ROLES_LIST.User),aryshareController.run)
 
+router.route('/createProfile')
+    .get(verifyRoles(ROLES_LIST.User),aryshareController.fetchProfile)
 
 module.exports = router;

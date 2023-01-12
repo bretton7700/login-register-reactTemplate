@@ -1,4 +1,5 @@
 const SocialPost = require("social-post-api");
+const fetch = require("node-fetch");
 const API_KEY = process.env.ARYSHARE_API_KEY; // get an API Key at ayrshare.com
 const social = new SocialPost(API_KEY);
  
@@ -14,5 +15,30 @@ const run = async (req, res) => {
 }
 
 
+function generateRandomString() {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  }
+  
+  const randomString = generateRandomString();
+    
 
-module.exports = { run }
+function fetchProfile() {
+  fetch("https://app.ayrshare.com/api/profiles/profile", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${API_KEY}`
+    },
+    body: JSON.stringify({
+      title: "Client " + randomString, // required
+    }),
+  })
+    .then((res) => res.json())
+    .then((json) => console.log(json))
+    .catch(console.error);
+}
+
+
+
+
+module.exports = { run ,fetchProfile}
