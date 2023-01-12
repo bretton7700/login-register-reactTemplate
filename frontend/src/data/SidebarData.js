@@ -9,26 +9,26 @@ export const SidebarData = [
         iconOpened: <KeyboardArrowUp/>,
        
     },
-    {
-        title: "Analytics",
-        path: "/datatrunk",
-        icon: <Workspaces />,
-        iconClosed: <KeyboardArrowDown/>,
-        iconOpened: <KeyboardArrowUp/>,
-        subNav: [
-            {
-                title: "Get Started",
-                path: "/addworkspace",
-                icon: <Add />,
-            },
-            {
-                title: "Mysql",
-                path: "/addmysqldb",
-                icon: <OfflineShare />,
-            },
+    // {
+    //     title: "Analytics",
+    //     path: "/datatrunk",
+    //     icon: <Workspaces />,
+    //     iconClosed: <KeyboardArrowDown/>,
+    //     iconOpened: <KeyboardArrowUp/>,
+    //     subNav: [
+    //         {
+    //             title: "Get Started",
+    //             path: "/addworkspace",
+    //             icon: <Add />,
+    //         },
+    //         {
+    //             title: "Mysql",
+    //             path: "/addmysqldb",
+    //             icon: <OfflineShare />,
+    //         },
             
-        ]
-    },
+    //     ]
+    // },
     
 
     {
@@ -73,7 +73,7 @@ export const SidebarData = [
     
     {
         title: "Publishing",
-        path: "/publishing",
+        path: "/aryshare/profile",
         icon: <Dns />,
         iconClosed: <KeyboardArrowDown/>,
         iconOpened: <KeyboardArrowUp/>,
